@@ -80,8 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				CC141A2D2111808B000C7B5B /* LeetcodeProblems */,
-				CC849CAD2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CB82112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
+				CC849CAD2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC141A2C2111808B000C7B5B /* Products */,
 			);
 			sourceTree = "<group>";
