@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CC141A2F2111808B000C7B5B /* mainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC141A2E2111808B000C7B5B /* mainTest.cpp */; };
+		CC3D3D9F21197BB6006AA2A3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC3D3D9E21197BB6006AA2A3 /* main.cpp */; };
 		CC849CAF2112C6330052DB4E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC849CAE2112C6330052DB4E /* main.cpp */; };
 		CC849CBA2112C6480052DB4E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC849CB92112C6480052DB4E /* main.cpp */; };
 		CC849CC52112E65B0052DB4E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC849CC42112E65B0052DB4E /* main.cpp */; };
@@ -15,6 +16,15 @@
 
 /* Begin PBXCopyFilesBuildPhase section */
 		CC141A292111808B000C7B5B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CC3D3D9A21197BB6006AA2A3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -55,6 +65,8 @@
 /* Begin PBXFileReference section */
 		CC141A2B2111808B000C7B5B /* LeetcodeProblems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LeetcodeProblems; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC141A2E2111808B000C7B5B /* mainTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainTest.cpp; sourceTree = "<group>"; };
+		CC3D3D9C21197BB6006AA2A3 /* 53_MaximumSubarray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 53_MaximumSubarray; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC3D3D9E21197BB6006AA2A3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CC849CAC2112C6330052DB4E /* 10_RegularExpressionMatching */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 10_RegularExpressionMatching; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC849CAE2112C6330052DB4E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CC849CB72112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 3_LongestSubstringWithoutRepeatingCharacters; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +77,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		CC141A282111808B000C7B5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC3D3D9921197BB6006AA2A3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -102,6 +121,7 @@
 				CC849CB82112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
 				CC849CAD2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CC32112E65B0052DB4E /* 15_3Sum */,
+				CC3D3D9D21197BB6006AA2A3 /* 53_MaximumSubarray */,
 				CC141A2C2111808B000C7B5B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,6 +133,7 @@
 				CC849CAC2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CB72112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
 				CC849CC22112E65B0052DB4E /* 15_3Sum */,
+				CC3D3D9C21197BB6006AA2A3 /* 53_MaximumSubarray */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,6 +144,14 @@
 				CC141A2E2111808B000C7B5B /* mainTest.cpp */,
 			);
 			path = LeetcodeProblems;
+			sourceTree = "<group>";
+		};
+		CC3D3D9D21197BB6006AA2A3 /* 53_MaximumSubarray */ = {
+			isa = PBXGroup;
+			children = (
+				CC3D3D9E21197BB6006AA2A3 /* main.cpp */,
+			);
+			path = 53_MaximumSubarray;
 			sourceTree = "<group>";
 		};
 		CC849CAD2112C6330052DB4E /* 10_RegularExpressionMatching */ = {
@@ -167,6 +196,23 @@
 			name = LeetcodeProblems;
 			productName = LeetcodeProblems;
 			productReference = CC141A2B2111808B000C7B5B /* LeetcodeProblems */;
+			productType = "com.apple.product-type.tool";
+		};
+		CC3D3D9B21197BB6006AA2A3 /* 53_MaximumSubarray */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC3D3DA221197BB6006AA2A3 /* Build configuration list for PBXNativeTarget "53_MaximumSubarray" */;
+			buildPhases = (
+				CC3D3D9821197BB6006AA2A3 /* Sources */,
+				CC3D3D9921197BB6006AA2A3 /* Frameworks */,
+				CC3D3D9A21197BB6006AA2A3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 53_MaximumSubarray;
+			productName = 53_MaximumSubarray;
+			productReference = CC3D3D9C21197BB6006AA2A3 /* 53_MaximumSubarray */;
 			productType = "com.apple.product-type.tool";
 		};
 		CC849CAB2112C6330052DB4E /* 10_RegularExpressionMatching */ = {
@@ -234,6 +280,10 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
+					CC3D3D9B21197BB6006AA2A3 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					CC849CAB2112C6330052DB4E = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -265,6 +315,7 @@
 				CC849CB62112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
 				CC849CAB2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CC12112E65B0052DB4E /* 15_3Sum */,
+				CC3D3D9B21197BB6006AA2A3 /* 53_MaximumSubarray */,
 			);
 		};
 /* End PBXProject section */
@@ -275,6 +326,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC141A2F2111808B000C7B5B /* mainTest.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC3D3D9821197BB6006AA2A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC3D3D9F21197BB6006AA2A3 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +483,24 @@
 			};
 			name = Release;
 		};
+		CC3D3DA021197BB6006AA2A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CC3D3DA121197BB6006AA2A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		CC849CB12112C6330052DB4E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -495,6 +572,15 @@
 			buildConfigurations = (
 				CC141A332111808B000C7B5B /* Debug */,
 				CC141A342111808B000C7B5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC3D3DA221197BB6006AA2A3 /* Build configuration list for PBXNativeTarget "53_MaximumSubarray" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC3D3DA021197BB6006AA2A3 /* Debug */,
+				CC3D3DA121197BB6006AA2A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
