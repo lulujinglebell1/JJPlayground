@@ -72,6 +72,7 @@ int main(int argc, const char * argv[]) {
     
     Solution s;
     
+    
     assert(s.lengthOfLongestSubstring("abcabcbb") == 3);
     assert(s.lengthOfLongestSubstring("bbbbb") == 1);
     assert(s.lengthOfLongestSubstring("pwwkew") == 3);
