@@ -31,22 +31,48 @@
  1. 1 step + 1 step + 1 step
  2. 1 step + 2 steps
  3. 2 steps + 1 step
+ 
+ Input: 4
+ Output: 5
+ Explanation: There are three ways to climb to the top.
+ 1. 1 step + 1 step + 1 step + 1 step
+ 2. 1 step + 2 steps + 1 step
+ 3. 2 steps + 1 step + 1 step
+ 4. 1 step + 1 step + 2 step
+ 5. 2 steps + 2 step
+ 
  */
 
-//input: 1 2 3 4 5
-//dp   : 1 2 3 3
+//input: 1 2 3 4
+//dp   : 1 2 3 5
 
 class Solution {
 public:
     int climbStairs(int n) {
+        int dp [n+1];
+        int result = 0;
         
+        if (n == 0 || n == 1 || n == 2 )
+            return n;
+        
+        dp[0] = 0;
+        dp[1] = 1;
+        dp[2] = 2;
+        
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i-1] + dp[i-2];
+            result = dp[i];
+        }
+        return result;
     }
 };
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     Solution s;
-
-    //assert(s.maxSubArray(2) == 2);
+    
+    assert(s.climbStairs(2) == 2);
+    assert(s.climbStairs(3) == 3);
+    assert(s.climbStairs(4) == 5);
     return 0;
 }
