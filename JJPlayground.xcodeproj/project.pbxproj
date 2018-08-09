@@ -73,7 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CC141A2B2111808B000C7B5B /* LeetcodeProblems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LeetcodeProblems; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC141A2B2111808B000C7B5B /* JJPlayground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JJPlayground; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC141A2E2111808B000C7B5B /* mainTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainTest.cpp; sourceTree = "<group>"; };
 		CC3D3D9C21197BB6006AA2A3 /* 53_MaximumSubarray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 53_MaximumSubarray; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3D3D9E21197BB6006AA2A3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		CC141A2C2111808B000C7B5B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC141A2B2111808B000C7B5B /* LeetcodeProblems */,
+				CC141A2B2111808B000C7B5B /* JJPlayground */,
 				CC849CAC2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CB72112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
 				CC849CC22112E65B0052DB4E /* 15_3Sum */,
@@ -210,9 +210,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CC141A2A2111808B000C7B5B /* LeetcodeProblems */ = {
+		CC141A2A2111808B000C7B5B /* JJPlayground */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC141A322111808B000C7B5B /* Build configuration list for PBXNativeTarget "LeetcodeProblems" */;
+			buildConfigurationList = CC141A322111808B000C7B5B /* Build configuration list for PBXNativeTarget "JJPlayground" */;
 			buildPhases = (
 				CC141A272111808B000C7B5B /* Sources */,
 				CC141A282111808B000C7B5B /* Frameworks */,
@@ -222,9 +222,9 @@
 			);
 			dependencies = (
 			);
-			name = LeetcodeProblems;
+			name = JJPlayground;
 			productName = LeetcodeProblems;
-			productReference = CC141A2B2111808B000C7B5B /* LeetcodeProblems */;
+			productReference = CC141A2B2111808B000C7B5B /* JJPlayground */;
 			productType = "com.apple.product-type.tool";
 		};
 		CC3D3D9B21197BB6006AA2A3 /* 53_MaximumSubarray */ = {
@@ -348,7 +348,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CC141A262111808B000C7B5B /* Build configuration list for PBXProject "LeetcodeProblems" */;
+			buildConfigurationList = CC141A262111808B000C7B5B /* Build configuration list for PBXProject "JJPlayground" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -361,7 +361,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC141A2A2111808B000C7B5B /* LeetcodeProblems */,
+				CC141A2A2111808B000C7B5B /* JJPlayground */,
 				CC849CB62112C6480052DB4E /* 3_LongestSubstringWithoutRepeatingCharacters */,
 				CC849CAB2112C6330052DB4E /* 10_RegularExpressionMatching */,
 				CC849CC12112E65B0052DB4E /* 15_3Sum */,
@@ -635,7 +635,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC141A262111808B000C7B5B /* Build configuration list for PBXProject "LeetcodeProblems" */ = {
+		CC141A262111808B000C7B5B /* Build configuration list for PBXProject "JJPlayground" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC141A302111808B000C7B5B /* Debug */,
@@ -644,7 +644,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC141A322111808B000C7B5B /* Build configuration list for PBXNativeTarget "LeetcodeProblems" */ = {
+		CC141A322111808B000C7B5B /* Build configuration list for PBXNativeTarget "JJPlayground" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC141A332111808B000C7B5B /* Debug */,
