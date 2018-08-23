@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <assert.h>
-
+using namespace std;
 /*
  Given a binary tree, find its maximum depth.
  
@@ -58,8 +58,9 @@ int helper (TreeNode * curN)
         else
             return helper (curN->right) + 1;
     }
-    return 0;  //?
+    return 0;
 }
+
 
 class Solution {
 public:
@@ -68,11 +69,18 @@ public:
     }
 };
 
+//#include "TestExtern.hpp"
+//#include "TestNoHeader.hpp"
+//#include "TestExtern111.cpp"
 
 int main(int argc, const char * argv[]) {
+    extern int aaa;
+    cout << aaa << endl;
+    extern void yoyoMan();
+    yoyoMan();
     // insert code here...
     Solution s;
-    int inputTree = [3,9,20,null,null,15,7];
+//    int inputTree = [3,9,20,null,null,15,7];
 //    assert(s.maxDepth(2) == 2);
 //    assert(s.maxDepth(3) == 3);
 //    assert(s.maxDepth(4) == 5);
