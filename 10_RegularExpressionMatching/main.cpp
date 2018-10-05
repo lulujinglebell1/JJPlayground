@@ -60,44 +60,83 @@
 #include <string.h>
 #include <assert.h>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
+    /*
+     bp[s.size()+1][s.size()+1]
+     bp[0][0] = true
+     
+     if (isCharMatched(s[i], p[j]))
+        bp[i][j] = bp[i-1][j-1]
+     else if (p[j] == '*')
+        // zero occurance
+        bp[i][j] = bp[i][j-2]
+        // multiple occrance
+        bp[i][j] = bp[i-1][j]
+     else
+        bp[i][j] = false
+     */
     bool isMatch(string s, string p) {
-        unsigned long sizePattern = p.size();
-        unsigned long sizeInput = s.size();
+        unsigned long dpLenghtS = s.size() + 1;
+        unsigned long dpLenghtP = p.size() + 1;
+        vector<vector<bool>> dp(dpLenghtS, vector<bool>(dpLenghtP, false));
         
-        int i = 0, j = 0;
-        for (; (i < sizePattern) && (j < sizeInput); i++) {
-            char pCharCurr = p[i];
-            if ((i+1 != sizePattern) &&
-                p[i+1] == '*') {
-                for (; j < sizeInput; j++) {
-                    if (!isCharMatched(s[j], pCharCurr)) {
-                        break;
+        dp[0][0] = true;
+        
+        // initialization
+        // Take care of a*b*c, a*
+        for (int j = 1; j < dp[0].size(); j++) {
+            if (p[j] == '*') {
+                dp[0][j+1] = dp[0][j-1];
+            }
+        }
+        
+        for (int i = 1; i < dpLenghtS; i++) {
+            for (int j = 1; j < dpLenghtP; j++) {
+                if (isCharMatched(s[i-1], p[j-1])) {
+                    // if match
+                    dp[i][j] = dp[i-1][j-1];
+                } else if (p[j-1] == '*') {
+                    if (isCharMatched(s[i-1], p[j-2])) {
+                        // single or multiple occurance
+                        dp[i][j] = dp[i-1][j-1] || dp[i-1][j] || dp[i][j-2];
+                    } else {
+                        // zero occurance
+                        dp[i][j] = dp[i][j-2];
                     }
-                }
-                i++;
-            } else {
-                if (isCharMatched(s[j], pCharCurr)) {
-                    j++;
                 } else {
-                    return false;
+                    dp[i][j] = false;
                 }
             }
         }
-
-        if ((i == sizePattern) &&
-            (j == sizeInput)) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        //printResult(s, p, dp);
+        return dp[dpLenghtS-1][dpLenghtP-1];
     }
     
 private:
+    void printResult(string s, string p, vector<vector<bool>> result) {
+        string printS = 'X' + s;
+        string printP = 'X' + p;
+        cout << '\t';
+        for (int i = 0; i < printP.size(); i++) {
+            cout << printP[i] << '\t';
+        }
+        cout << endl;
+        for (int i = 0; i < printS.size(); i++) {
+            cout << printS[i] << '\t';
+            for (int j = 0; j < printP.size(); j++) {
+                cout << (result[i][j] ? 'T' : 'F') << '\t';
+            }
+            cout << endl;
+        }
+        cout << endl << endl;
+    }
+    
     bool isCharMatched(char cS, char cP) {
         if (cS == cP || cP == '.') {
             return true;
@@ -117,7 +156,7 @@ int main(int argc, const char * argv[]) {
     assert(s.isMatch("aab", "c*a*b"));
     assert(false == s.isMatch("mississippi", "mis*is*p*."));
     assert(s.isMatch("aaa", "a*a"));
-
+    assert(s.isMatch("aaa", "ab*a*c*a"));
 
     return 0;
 }
