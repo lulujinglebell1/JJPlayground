@@ -7,12 +7,12 @@
 		<key>104_Maximum_Depth_of_Binary_Tree.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>7</integer>
 		</dict>
 		<key>108_ConvertSortedArraytoBinarySearchTree.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>9</integer>
 		</dict>
 		<key>10_RegularExpressionMatching.xcscheme_^#shared#^_</key>
 		<dict>
@@ -27,12 +27,12 @@
 		<key>111_MinimumDepthofBinaryTree.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>12</integer>
+			<integer>13</integer>
 		</dict>
 		<key>112_PathSum.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>13</integer>
+			<integer>12</integer>
 		</dict>
 		<key>118_PascalsTriangle.xcscheme</key>
 		<dict>
@@ -44,10 +44,20 @@
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
+		<key>11_ContainerWithMostWater.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>121_BestTimetoBuyandSellStock.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>8</integer>
+		</dict>
+		<key>141_LinkedListCycle.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
 		</dict>
 		<key>155_MinStack.xcscheme</key>
 		<dict>
@@ -74,6 +84,26 @@
 			<key>orderHint</key>
 			<integer>20</integer>
 		</dict>
+		<key>171_ExcelSheetColumnNumber.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>23</integer>
+		</dict>
+		<key>172_FactorialTrailingZeroes.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
+		<key>206_ReverseLinkedList.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
+		<key>2_AddTwoNumbers.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>27</integer>
+		</dict>
 		<key>3_LongestSubstringWithoutRepeatingCharacters.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -87,7 +117,12 @@
 		<key>58_LengthofLastWord.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>10</integer>
+		</dict>
+		<key>5_LongestPalindromicSubstring.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>25</integer>
 		</dict>
 		<key>70_ClimbingStairs.xcscheme_^#shared#^_</key>
 		<dict>
@@ -97,7 +132,7 @@
 		<key>88_MergeSortedArray.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>6</integer>
 		</dict>
 		<key>LeetcodeProblems.xcscheme_^#shared#^_</key>
 		<dict>

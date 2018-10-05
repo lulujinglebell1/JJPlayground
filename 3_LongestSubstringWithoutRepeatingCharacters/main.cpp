@@ -28,6 +28,8 @@ using namespace std;
 
 class Solution {
 public:
+    
+    
     int lengthOfLongestSubstring(string s) {
         unsigned long inputStringLength = s.size();
         map<char, int> map;
@@ -45,6 +47,10 @@ public:
         
         return longestLength;
     }
+    /*
+     Input: "abcabcbb"
+     Output: 3
+     */
     
     int lengthOfLongestSubstringFast(string s) {
         unsigned long inputStringLength = s.size();
@@ -65,8 +71,28 @@ public:
         return longestLength;
     }
 
-};
 
+int lengthOfLongestSubstring_Jane(string s) {
+    int hashMap[128];
+    memset (hashMap, -1, 128*sizeof(int));
+    int longestReturn = 0;
+    int curLong;
+    int trackLengthStartIndex = 0;
+    int curCharHashIndex;
+    
+    for (int i = 0; i < s.length(); i++) {
+        curCharHashIndex = (int) s[i];
+        if (hashMap[curCharHashIndex] != -1) {
+            trackLengthStartIndex = max (hashMap[curCharHashIndex] + 1, trackLengthStartIndex);
+        }
+        hashMap[curCharHashIndex] = i;
+        curLong = i - trackLengthStartIndex + 1;
+        longestReturn = max (curLong, longestReturn);
+    }
+    return longestReturn;
+    
+}
+};
 
 int main(int argc, const char * argv[]) {
     
@@ -83,5 +109,9 @@ int main(int argc, const char * argv[]) {
     assert(s.lengthOfLongestSubstringFast("pwwkew") == 3);
     assert(s.lengthOfLongestSubstringFast("abba") == 2);
 
+    assert(s.lengthOfLongestSubstring_Jane("abcabcbb") == 3);
+    assert(s.lengthOfLongestSubstring_Jane("bbbbb") == 1);
+    assert(s.lengthOfLongestSubstring_Jane("pwwkew") == 3);
+    assert(s.lengthOfLongestSubstring_Jane("abba") == 2);
     return 0;
 }

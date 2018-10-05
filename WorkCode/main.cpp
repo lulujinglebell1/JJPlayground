@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <set>
 
 using namespace std;
 ////////////////////////////////////////
@@ -52,7 +53,7 @@ bool isP (string str){
     
     return true;
 }
-/////////////////////////////// done
+///////////////////////////////
 int sN (vector <int>& nums){
     int result;
     for (int i = 0; i < nums.size(); i++){
@@ -60,7 +61,7 @@ int sN (vector <int>& nums){
     }
     return result;
 }
-//////////////////////////done
+//////////////////////////
 vector<int> tS (vector<int>& numbers, int target){
     int left = 0;
     int right = numbers.size() - 1;
@@ -99,21 +100,34 @@ public:
 //////////////////
 //D2 X (26^2) + D1 X (26^1) + D0
 
-int tToN(string s){
-    int lenS = s.length();
-    char curChar = s[0];
-    int charD;
-    int curResult;
-    int totalResult = 0;
-    
-    for (int i = (lenS - 1); i <= 0; i++){
-        curChar = s[i];
-        charD = (int)curChar - 64;
-        curResult = charD*26;
-        totalResult = curResult
+
+int time26 (int timeNum){
+    int result = 1;
+    if (timeNum == 0){
+        return 1;
+    }else{
+        for (int i = 1; i < timeNum; i++){
+            result = result * 26
+        }
     }
     return result;
 }
+int tToN(string s){
+    
+    int lenS = s.length();
+    char curChar;
+    int charD;
+    int result = 0;
+    
+    for (int i = (lenS - 1); i >= 0; i--){
+        curChar = s[i];
+        charD = (int)curChar - 64;
+        result = result + charD * time26(i);
+    }
+    return result;
+}
+
+
 /////////////////////////////////
 string convertToTitle(int n){
     int totalChar = n/26; //determin how many char needed to be return
@@ -132,7 +146,7 @@ string convertToTitle(int n){
     }
     return returnS;
 }
-//////////////////////////////done
+//////////////////////////////
 class MinStack{
 private:
     class Node{
@@ -189,7 +203,7 @@ public:
     }
     
 };
-/////////////////////////////////done
+/////////////////////////////////
 struct ListNode{
     int val;
     ListNode* next;
@@ -258,12 +272,30 @@ int mElement (vector<int>& nums){
     
 }
 ///////////////////////////////
+int trailingZ (int n){
+    int result = 1;
+    int zero = 0;
+    
+    for (int i = n; i >= 1; i--){
+        result = result*i;
+    }
+    
+    while (result % 10 == 0){
+        zero++;
+        result = result / 10;
+    }
+    return zero;
+}
+
+////////////////////////
 
 
+
+
+/////////////////////////////
 
 int main (void){
     
     return 0;
 }
 /////////////////////////
-
