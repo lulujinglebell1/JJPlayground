@@ -7,6 +7,8 @@
 //
 
 #include <iostream>
+#include <queue>
+using namespace std;
 
 /*
  You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
@@ -22,6 +24,7 @@
 
 /*
  specail case 1: ==>need to consider integer overflow case!!!!
+ ==> has to use queue instead of regular math using sum = int+int;
  
  Input:
  [9]
@@ -37,99 +40,79 @@
  [0]
  */
 
- struct ListNode {
+
+
+struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
- };
- 
-
-long int Increment10 (int time10) {
-    long int result  = 1;
-    if (time10 == 0)
-    {
-        return 1;
-    } else {
-        for (int i = 1; i <= time10; i++) {
-            result = result * 10;
-        }
-    }
-    return result;
-}
-long int listToNum (ListNode* inList)
-{
-    ListNode* curN = inList;
-    long int returnInt = 0;
-    int time10 = 0;
-    while (curN != NULL)
-    {
-        returnInt = returnInt + (curN->val)* Increment10(time10);
-        time10++;
-        curN = curN->next;
-    }
-    return returnInt;
-}
-
-ListNode* numToList (long num)
-{
-
-    long curNum = num;
-    ListNode* returnN = NULL;
-    ListNode* curN = NULL;
-    int firstN = true;
-    
-    if (num == 0) {
-        returnN = new ListNode(0);
-        return returnN;
-    }
-    
-    while (curNum != 0)
-    {
-        if (firstN == true)
-        {
-            returnN = new ListNode(curNum%10);
-            firstN = false;
-            curN = returnN;
-        }
-        else
-        {
-            curN->next = new ListNode(curNum%10);
-            curN = curN->next;
-        }
-        curNum = curNum/10;
-    }
-    return returnN;
-}
-
-
-class Solution {
-public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* returnList;
-        long sum;
-        sum = listToNum (l1) + listToNum (l2);
-        returnList = numToList (sum);
-        return returnList;
-    }
-
 };
 
-int main(int argc, const char * argv[]) {
-    /*
-    ListNode head(2);
-    ListNode child1(4);
-    head.next = &child1;
-    ListNode child2(3);
-    child1.next = &child2;
-    child2.next = NULL;
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    queue<int> queue1;
+    queue<int> queue2;
+    queue<int> queueSum;
+    int carrier = 0;
+    int value1;
+    int value2;
+    int curSum = -1; //
+
+    ListNode* cur1 = l1;
+    ListNode* cur2 = l2;
     
-    ListNode head2(5);
-    ListNode child12(6);
-    head2.next = &child12;
-    ListNode child22(4);
-    child12.next = &child22;
-    child22.next = NULL;
-    */
+    
+    while (cur1 != NULL) {
+        queue1.push(cur1->val);
+        cur1 = cur1->next;
+    }
+    
+    while (cur2 != NULL) {
+        queue2.push(cur2->val);
+        cur2 = cur2->next;
+    }
+
+    while ((queue1.empty() != true || queue2.empty() != true) || (carrier == 1)) {
+        if (queue1.empty() != true) {
+            value1 = queue1.front();
+            queue1.pop();
+        }else {
+            value1 = 0;
+        }
+        
+        if (queue2.empty() != true) {
+            value2 = queue2.front();
+            queue2.pop();
+        }else {
+            value2 = 0;
+        }
+        curSum = value1 + value2 + carrier;
+        
+        if (curSum >= 10) {
+            queueSum.push (curSum % 10);
+            carrier = 1;
+        } else {
+            queueSum.push (curSum);
+            carrier = 0;
+        }
+    }
+    
+    ListNode* returnListHead = new ListNode(queueSum.front());
+    queueSum.pop();
+    ListNode* curNode = returnListHead;
+    
+    while (queueSum.empty() != true) {
+        ListNode* nextNode = new ListNode(queueSum.front());
+        queueSum.pop();
+        curNode->next = nextNode;
+        curNode = nextNode;
+    }
+    
+    return returnListHead;
+}
+    
+
+int main(int argc, const char * argv[]) {
     
     ListNode head1(9);
     head1.next = NULL;
@@ -155,7 +138,24 @@ int main(int argc, const char * argv[]) {
     child8.next = &child9;
     child9.next = NULL;
     
-    addTwoNumbers(&head1, &head);
+    ListNode head2(2);
+    ListNode child12(4);
+    head2.next = &child12;
+    ListNode child22(3);
+    child12.next = &child22;
+    child22.next = NULL;
+    
+    ListNode head3(5);
+    ListNode child13(6);
+    head3.next = &child13;
+    ListNode child23(4);
+    child13.next = &child23;
+    child23.next = NULL;
+    
+    //addTwoNumbers(&head1, &head);
+    addTwoNumbers(&head2, &head3);
+
     
     return 0;
 }
+
