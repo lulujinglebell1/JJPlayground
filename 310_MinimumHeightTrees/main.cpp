@@ -89,7 +89,7 @@ vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
         table[edges[i].second].insert(edges[i].first);
     }
 
-    
+    /*dereferencing a std::map iterator gives you a std::pair , you can then access its elements with first and second . For example, (*it). first will give you the key and (*it). second will give you the value.*/
     while (nodeCount > 2 || finalNodes.size() > 2) {
         leaveToBeRemoved.clear();
         finalNodes.clear();
