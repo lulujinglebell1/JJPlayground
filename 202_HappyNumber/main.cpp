@@ -34,21 +34,27 @@
 
 class Solution {
 public:
-    bool isHappy(int n) {
+    
+    bool isHappy(int n) {
         int input = n;
         int result = n;
-        
+
         while (result != 1) {
             n = result;
             result = 0;
-            while (n/10 != 0 || n%10 !=0) {
+            while ((n/10 != 0) || (n%10 != 0)) {
+
                 result = result + (n%10)*(n%10);
                 n = n/10;
             }
-            if (result == input * input) {
+            printf("%d ", result);
+            if (result == 4) {
+                printf("\n");
                 return false;
             }
         }
+        printf("\n");
+
         return true;
     }
 };
@@ -57,5 +63,6 @@ int main(int argc, const char * argv[]) {
     Solution s;
     assert (s.isHappy(19) == true);
     assert (s.isHappy(2) == false);
+    assert (s.isHappy(7) == true);
     return 0;
 }
