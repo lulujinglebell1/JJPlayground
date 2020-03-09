@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CC849CB62112C6480052DB4E"
-               BuildableName = "3_LongestSubstringWithoutRepeatingCharacters"
-               BlueprintName = "3_LongestSubstringWithoutRepeatingCharacters"
+               BlueprintIdentifier = "CC3D3DB1211C1229006AA2A3"
+               BuildableName = "104_Maximum_Depth_of_Binary_Tree"
+               BlueprintName = "104_Maximum_Depth_of_Binary_Tree"
                ReferencedContainer = "container:JJPlayground.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CC849CB62112C6480052DB4E"
-            BuildableName = "3_LongestSubstringWithoutRepeatingCharacters"
-            BlueprintName = "3_LongestSubstringWithoutRepeatingCharacters"
-            ReferencedContainer = "container:JJPlayground.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -53,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CC849CB62112C6480052DB4E"
-            BuildableName = "3_LongestSubstringWithoutRepeatingCharacters"
-            BlueprintName = "3_LongestSubstringWithoutRepeatingCharacters"
+            BlueprintIdentifier = "CC3D3DB1211C1229006AA2A3"
+            BuildableName = "104_Maximum_Depth_of_Binary_Tree"
+            BlueprintName = "104_Maximum_Depth_of_Binary_Tree"
             ReferencedContainer = "container:JJPlayground.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -66,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CC849CB62112C6480052DB4E"
-            BuildableName = "3_LongestSubstringWithoutRepeatingCharacters"
-            BlueprintName = "3_LongestSubstringWithoutRepeatingCharacters"
+            BlueprintIdentifier = "CC3D3DB1211C1229006AA2A3"
+            BuildableName = "104_Maximum_Depth_of_Binary_Tree"
+            BlueprintName = "104_Maximum_Depth_of_Binary_Tree"
             ReferencedContainer = "container:JJPlayground.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
