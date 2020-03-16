@@ -94,10 +94,20 @@
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
+		<key>17_LetterCombinationsOfAPhoneNumber.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>40</integer>
+		</dict>
 		<key>198_HouseRobber.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>35</integer>
+		</dict>
+		<key>1_TwoSum.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>39</integer>
 		</dict>
 		<key>202_HappyNumber.xcscheme_^#shared#^_</key>
 		<dict>
@@ -179,6 +189,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>8_StringToInteger.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>37</integer>
+		</dict>
 		<key>LeetcodeProblems.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -188,6 +203,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>17</integer>
+		</dict>
+		<key>summary.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>38</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
