@@ -1,0 +1,94 @@
+/*
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+using namespace std;
+*/
+
+/*
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+
+Example 1:
+
+Input: "A man, a plan, a canal: Panama"
+Output: true
+Example 2:
+
+Input: "race a car"
+Output: false
+*/
+
+class Solution {
+public:
+
+
+	bool isAlphanumericAndChangeToUpperCase(char& inChar) {
+		if ((inChar >= 'a') && (inChar <= 'z'))
+		{
+			return true;
+		}
+		
+		if ((inChar >= '0')&& (inChar <= '9'))
+		{
+			return true;
+		}
+
+		if ((inChar >= 'A') && (inChar <= 'Z'))
+		{
+				inChar = inChar + 32;
+				return true;
+		}
+		
+		return false;
+
+	}
+
+	bool isPalindrome(string s) {
+		int i = 0;
+		int j = s.size() - 1;
+
+		while ( i < j)
+		{
+			if (isAlphanumericAndChangeToUpperCase(s[i]) == false)
+			{
+				i++;
+			}
+
+			if (isAlphanumericAndChangeToUpperCase(s[j]) == false)
+			{
+				j--;
+			}
+
+			if (isAlphanumericAndChangeToUpperCase(s[i]) && isAlphanumericAndChangeToUpperCase(s[j]))
+			{
+				if (s[i] == s[j])
+				{
+					i++;
+					j--;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+};
+
+/*
+int main() {
+	Solution s;
+	string input1 = "A man, a plan, a canal: Panama";
+
+	assert(s.isPalindrome(input1) == true);
+
+	string input2 = "0P";
+
+	assert(s.isPalindrome(input2) == false);
+	return 0;
+}
+*/
