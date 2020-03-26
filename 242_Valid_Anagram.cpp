@@ -1,3 +1,23 @@
+/*
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+using namespace std;
+*/
+
+/*
+Problem #242
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+*/
+
 class Solution {
 public:
 
@@ -30,3 +50,18 @@ public:
 	}
 
 };
+
+/*
+int main() {
+	Solution s;
+	string input1 = "anagram";
+	string input2 = "nagaram";
+
+	assert(s.isAnagram(input1, input2 ) == true);
+
+	return 0;
+}
+*/
+
+
+
