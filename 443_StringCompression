@@ -1,0 +1,149 @@
+/*
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+
+using namespace std;
+*/
+
+/*
+443. String Compression (unfinished, still has bug, the answer i submit was from other people with similar solving idea)
+Given an array of characters, compress it in-place.
+
+The length after compression must always be smaller than or equal to the original array.
+
+Every element of the array should be a character (not int) of length 1.
+
+After you are done modifying the input array in-place, return the new length of the array.
+
+
+Follow up:
+Could you solve it using only O(1) extra space?
+
+
+Example 1:
+
+Input:
+["a","a","b","b","c","c","c"]
+
+Output:
+Return 6, and the first 6 characters of the input array should be: ["a","2","b","2","c","3"]
+
+Explanation:
+"aa" is replaced by "a2". "bb" is replaced by "b2". "ccc" is replaced by "c3".
+
+
+Example 2:
+
+Input:
+["a"]
+
+Output:
+Return 1, and the first 1 characters of the input array should be: ["a"]
+
+Explanation:
+Nothing is replaced.
+
+
+Example 3:
+
+Input:
+["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+
+Output:
+Return 4, and the first 4 characters of the input array should be: ["a","b","1","2"].
+
+Explanation:
+Since the character "a" does not repeat, it is not compressed. "bbbbbbbbbbbb" is replaced by "b12".
+Notice each digit has it's own entry in the array.
+*/
+
+class Solution {
+public:
+
+	//TODO: make a function for it:
+
+	void modifyArray(int count, vector<char> & chars, int& curIndex, char countingChar) {
+		string countInString;
+		countInString = to_string(count);
+		chars[curIndex] = countingChar;
+		curIndex++;
+
+		for (int j = 0; j < countInString.size(); j++)
+		{
+			chars[curIndex + j] = countInString[j];
+		}
+		curIndex = curIndex + countInString.size();
+	}
+	//END
+
+	int compress(vector<char>& chars) {
+		
+		if (chars.size() == 0)
+		{
+			return 0;
+		}
+
+		if (chars.size() == 1)
+		{
+			return 1;
+		}
+
+		char countingChar = chars[0];
+		char curChar = chars[0];
+		int count = 0;
+		int curIndex = 0;
+		char previousChar = chars[0];
+
+		for (int i = 0; i < chars.size(); i++)
+		{
+			curChar = chars[i];
+			if (curChar == countingChar)
+			{
+				count++;
+				//deal with last char
+				if (i == chars.size() -1)
+				{
+					modifyArray(count, chars, curIndex, countingChar);
+					chars.erase(chars.begin() + curIndex, chars.begin() + chars.size());
+				}
+			}
+			else
+			{	
+				
+				previousChar = countingChar;
+				//only one char apear in the array
+				if (count == 1) 
+				{
+					curIndex++;
+					// TODO: this could be the last char
+				}
+				else
+				{
+					modifyArray(count, chars, curIndex, countingChar);
+					countingChar = curChar;
+					count = 1;
+				}
+			}
+
+
+		}
+		return curIndex + 1;
+	}
+};
+
+/*
+int main() {
+	Solution s;
+	int n = 6;
+	vector<char> input = { 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
+	vector<char> output = { 'a', '2', 'b', '2', 'c', '3' };
+
+	assert(s.compress(input) == 6);
+	assert(input == output);
+	return 0;
+}
+
+*/
