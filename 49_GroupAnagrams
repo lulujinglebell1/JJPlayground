@@ -1,0 +1,74 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+
+/*
+49. Group Anagrams
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+Note:
+
+All inputs will be in lowercase.
+The order of your output does not matter.
+*/
+
+class Solution {
+public:
+	vector<vector<string>> groupAnagrams(vector<string>& strs) {
+		vector<vector<string>> result;
+		unordered_map<string, int> stringToIndexMap;
+		int resultIndex = 0;
+
+		//contruct a string to index map table
+		for (int i = 0; i < strs.size(); i++) {
+			string sortedString = strs[i];
+			sort(sortedString.begin(), sortedString.end());
+			if (stringToIndexMap.count(sortedString) <= 0) {
+				//stringToIndexMap.insert(make_pair(sortedString, resultIndex++));
+				stringToIndexMap[sortedString] = resultIndex++;
+
+			}
+		}
+
+		//The C++ function std::vector::resize() changes the size of vector. 
+		//If n is smaller than current size then extra elements are destroyed. 
+		//If n is greater than current container size then new elements are inserted at the end of vector.
+
+		result.resize(resultIndex);
+
+		//push the string into the table constructed above
+		for (int i = 0; i < strs.size(); i++) {
+			string sortedString = strs[i];
+			sort(sortedString.begin(), sortedString.end());
+			int index_res = stringToIndexMap[sortedString];
+			result[index_res].push_back(strs[i]);
+		}
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	return 0;
+}
+
+
+
+
+
