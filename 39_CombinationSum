@@ -1,0 +1,88 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+
+/*
+39. Combination Sum
+
+//https://www.youtube.com/watch?v=MTI2wc8s0BY
+
+Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+The same repeated number may be chosen from candidates unlimited number of times.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+Example 2:
+
+Input: candidates = [2,3,5], target = 8,
+A solution set is:
+[
+  [2,2,2,2],
+  [2,3,3],
+  [3,5]
+]
+*/
+
+class Solution {
+public:
+	void combinationSumHelper(vector<int>& candidates, int target, int index, vector<int>& curArray, vector<vector<int>>& output) {
+		if (target <= 0)
+		{
+			if (target == 0)
+			{
+				output.push_back(curArray);
+			}
+			return;
+		}
+
+		if (index < (int)candidates.size())
+		{
+			int curValue = candidates[index];
+			curArray.push_back(curValue);
+			combinationSumHelper(candidates, target - curValue, index, curArray, output);
+			curArray.pop_back();
+			combinationSumHelper(candidates, target, index + 1, curArray, output);
+		}
+		return;
+	}
+
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+		vector<int> curArray;
+		vector<vector<int>> output;
+		int index = 0;
+		combinationSumHelper(candidates, target, index, curArray, output);
+		return output;
+	}
+};
+
+int main() {
+	Solution s;
+	vector<int> input = { 2,3,5 };
+	vector<vector<int>> output;
+
+	output=s.combinationSum(input, 8);
+	return 0;
+}
+
+
+
+
+
