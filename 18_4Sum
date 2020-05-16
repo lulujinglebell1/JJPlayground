@@ -1,0 +1,111 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+
+/*
+18. 4Sum
+Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+Note:
+
+The solution set must not contain duplicate quadruplets.
+
+Example:
+
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+*/
+
+ 
+
+class Solution {
+public:
+	vector<vector<int>> fourSum(vector<int>& nums, int target) {
+		int threeSumTargetIndex;
+		int twoSumTargetIndex;
+		int leftIndex;
+		int rightIndex;
+		vector<vector<int>> result;
+		vector<int> subResult;
+		int curSum;
+		if (nums.size() < 4)
+		{
+			return result;
+		}
+
+		sort(nums.begin(), nums.end());
+
+		for (int i = 0; i < nums.size()-3; i++)
+		{
+			if (i!=0 && nums[i] == nums[i-1])
+			{
+				continue;
+			}
+			for (int j = i+1; j < nums.size()-2; j++)
+			{
+				if (j!=i+1 && nums[j] == nums[j-1])
+				{
+					continue;
+				}
+				leftIndex = j + 1;
+				rightIndex = nums.size() - 1;
+				while (leftIndex < rightIndex)
+				{
+					curSum = nums[i] + nums[j] + nums[leftIndex] + nums[rightIndex];
+					if (curSum > target)
+					{
+						rightIndex--;
+					}
+					else if (curSum < target)
+					{
+						leftIndex++;
+					}
+					else
+					{
+						//we found one solution 
+						subResult.push_back(nums[i]);
+						subResult.push_back(nums[j]);
+						subResult.push_back(nums[leftIndex]);
+						subResult.push_back(nums[rightIndex]);
+						result.push_back(subResult);
+						subResult.clear();
+						rightIndex--;
+						leftIndex++;
+
+						while ((leftIndex<rightIndex) && (nums[rightIndex] == nums[rightIndex + 1]))
+						{
+							rightIndex--;
+						}
+
+						while ((leftIndex<rightIndex) && (nums[leftIndex] == nums[leftIndex-1]))
+						{
+							leftIndex++;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	vector<int> nums = {1,0,-1,0,-2,2};
+	s.fourSum(nums, 0);
+	return 0;
+}
+
