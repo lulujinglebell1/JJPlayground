@@ -1,0 +1,77 @@
+/*
+#include <iostream>
+using namespace std;
+
+// To execute C++, please define "int main()"
+int main() {
+  auto words = { "Hello, ", "World!", "\n" };
+  for (const string& word : words) {
+    cout << word;
+  }
+  return 0;
+}
+
+*/
+
+#include <iostream>
+using namespace std;
+#include <cstring> // for memset function
+//#include<assert.h>
+//#include<string>
+//#include<map>
+//#include<vector>
+//#include<algorithm> //for max function
+//#include<unordered_map>
+using namespace std;
+
+
+class Solution {
+public:
+  int lengthOfLongestSubstring(string s) {
+    int hashMapofIndex[128]; //to store index of the char
+    char curChar;
+    int result=0;
+    int curLength=0;
+    int startIndex=0;
+    int curCharInteger;
+
+    memset (hashMapofIndex, -1, 128*sizeof(int));
+    
+    
+    for (int i = 0; i < (int)s.size(); i++) {
+      curChar = s[i];
+      curCharInteger = (int) curChar;
+    //  cout << "hashMapofIndex[curCharInteger]" << hashMapofIndex[curCharInteger] << "\n";
+      //this is not the first time we see this char
+      if (hashMapofIndex[curCharInteger] != -1)
+      {
+        //if last time we see this char is after the startIndex
+        if (hashMapofIndex[curCharInteger] >= startIndex)
+        { 
+          startIndex = hashMapofIndex[curCharInteger] + 1;
+    //      cout << "startIndex" << startIndex << "\n";
+        }
+      }
+      //update the hashMapofIndex;
+      hashMapofIndex[curCharInteger] = i;
+      
+      //update curLength;
+      curLength = i - startIndex + 1;
+      result = max (curLength, result);
+    }
+
+    return result;
+  }
+};
+
+int main() {
+  Solution s;
+  string input = "abcabcabcbb";
+  int result1 = s.lengthOfLongestSubstring(input);
+  cout << "result1" << result1;
+
+  string input1 = "bbb";
+  int result2 = s.lengthOfLongestSubstring(input1);
+  cout << "result2" << result2;
+  return 0;
+}
