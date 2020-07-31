@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+#include <vector>
+
+//you can draw a graph which show the price diffence for this question
+int maxProfit(vector<int>& prices) {
+  int vally;
+  int peak;
+  int result = 0;
+  int totalNums = prices.size();
+  
+  //i has to be less than totalNums because it does not make sense to buy on the last day and not sell
+  for (int i = 0; i < totalNums - 1; i++) {
+    while (prices[i+1] <= prices[i]) {
+      i++;
+    }
+    vally = prices[i];
+    while (prices[i+1] >= prices[i]) {
+      i++;
+    }
+    peak = prices[i];
+    result = result + (peak - vally);
+  }
+  
+  return result;
+}
