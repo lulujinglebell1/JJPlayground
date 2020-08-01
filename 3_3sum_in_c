@@ -1,0 +1,108 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+
+int cmp(const void *a, const void *b)
+{
+    return *(int*)a - *(int*)b;
+}
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+
+int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+
+  //not sure why has to time (numsSize-1)/2 yet
+  int** result = (int**)malloc(sizeof(int*)*numsSize*(numsSize-1)/2);
+  int leftIndex;
+  int rightIndex;
+  int curTarget;
+  int arrayX = 0;
+  int sum;
+  
+  if (numsSize < 3) 
+    return NULL;  
+  
+  qsort(nums, numsSize, sizeof(nums[0]), cmp);
+  
+  for (int i = 0; i < numsSize -2; i++) 
+  {
+    
+    //handle duplication, if duplication skip to the element 
+    if (i!=0 && nums[i] == nums[i-1])
+    {
+        continue;
+        //printf("why");
+    } 
+    curTarget = nums[i];
+
+    leftIndex = i+1;
+    rightIndex = numsSize -1;
+    
+    while (leftIndex < rightIndex) {
+      
+      sum = curTarget + nums[leftIndex] + nums [rightIndex];
+      if (sum == 0) {
+        //store the value to the result
+        result[arrayX] = (int*)malloc(sizeof(int)*3);
+        result[arrayX][0] = curTarget;
+        result[arrayX][1] = nums[leftIndex];
+        result[arrayX][2] = nums[rightIndex];
+        rightIndex--;
+        leftIndex++;
+        arrayX++;
+        
+        //handle duplication
+        while ((leftIndex < rightIndex) && (nums[leftIndex] ==nums[leftIndex-1])){
+          leftIndex++;
+        }
+        while  ((leftIndex < rightIndex) && (nums[rightIndex] == nums[rightIndex+1])){
+          rightIndex--;     
+        }
+        //do rightIndex--; while (nums[rightIndex]==nums[rightIndex+1] && leftIndex < rightIndex);
+
+      } else if (sum > 0) {
+        rightIndex--;
+      } else {
+        leftIndex++;
+      }
+    }
+    // avoid duplication
+    //do i++; while (nums[i]==nums[i-1] && i < numsSize-2);
+                                
+  }
+  
+
+  *returnColumnSizes = (int*)malloc(sizeof(int)*(arrayX));
+                                    
+  for (int i = 0; i < arrayX; i++) {
+    (*returnColumnSizes)[i] = 3;
+  }
+  
+  *returnSize = arrayX;
+  return result;
+}
+
+  
+int main () {
+  int nums [6] = {-1,0,1,2,-1,-4};
+  int numsSize =6;
+  int returnSize;
+  int* returnColumnSizes;
+  int** result;
+  result = threeSum(nums, numsSize, &returnSize, &returnColumnSizes);
+  
+  for (int i = 0; i < returnSize; i++ )
+  {
+    for (int j = 0; j < 3; j++) 
+    {
+      printf ("%d", result[i][j]);
+    }
+      printf("\n");
+  }
+
+return 0;
+}
