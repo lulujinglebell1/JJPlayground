@@ -1,0 +1,46 @@
+#include <stddef.h> //for NULL define
+#include <stdlib.h> // for malloc
+
+// Definition for a binary tree node.
+struct TreeNode {
+     int val;
+     struct TreeNode *left;
+     struct TreeNode *right;
+ };
+
+
+struct TreeNode* sortedArrayToBST_Recusive (int* nums, int left_index, int right_index) {
+
+  struct TreeNode* mid_node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+  int mid_index;
+    
+  if (left_index > right_index) {
+    return NULL;
+  }
+  
+  mid_index = (right_index + left_index)/2;
+  
+  mid_node->val = nums[mid_index];
+  mid_node->left = sortedArrayToBST_Recusive (nums, left_index, mid_index-1);
+  mid_node->right = sortedArrayToBST_Recusive (nums, mid_index+1, right_index);  
+  
+  return mid_node;
+}
+
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize){
+
+  //get the left and right index and pass to an fucntion that do recursive to generate the tree
+  int left_index = 0;
+  int right_index = numsSize - 1;
+  
+  if (numsSize == 0) {
+    return NULL;
+  }
+  
+  struct TreeNode* head = sortedArrayToBST_Recusive (nums, left_index,right_index);
+  return head;
+}
+
+int main () {
+return 0;
+}
