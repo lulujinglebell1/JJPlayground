@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+//cannot use bool/true/false if not include <stdbool.h>
+#include <stdbool.h>
+
+// To execute C, please define "int main()"
+
+
+char * longestCommonPrefix(char ** strs, int strsSize){
+
+  int shortest_Length;
+  int cur_Length;
+  char cur_char;
+  char target_char;
+  int count=0;
+      int result_len =0;
+    bool flag = false;
+    
+  if (strsSize == 0)
+    return "";
+    
+shortest_Length = strlen(strs[0]);
+  //find the strs[x] with the shortest length so that we can malloc the memory for the output string 
+  for (int i = 0; i < strsSize; i++) {
+    cur_Length = strlen(strs[i]);
+      
+    if (cur_Length < shortest_Length) {
+      shortest_Length = cur_Length;
+    }
+  }
+    printf ("%d\n",shortest_Length );
+//need to have one more space for the end NULL pointer '\0'
+  char* result = (char*)malloc(sizeof(char)*(shortest_Length + 1));
+    target_char = strs [0][0];
+
+  //loop all the strs[x] and compare the char one by one
+  for (int i = 0; i < shortest_Length; i++) {
+    target_char = strs [0][i];
+    printf ("target_char: %c\n",target_char );
+
+    for (int j = 0; j < strsSize; j++) {
+      cur_char = strs [j][i];
+        printf ("cur_char: %c\n",cur_char );
+
+      if (cur_char != target_char) {
+          break;
+      } 
+      count++;
+      printf ("count: %d\n",count );
+    }
+    
+    //the target char is the same for the string
+    if (count == strsSize) {
+        result[i] =  target_char;
+        printf ("i: %d \n",i );
+        printf ("result: %c \n",result[i] );
+        flag = true;
+        count = 0;
+        result_len ++;
+    } else {
+        break;
+    }
+  }
+    //Note!!! we cannot call strlen of result if we did not pull the '\0' at the end of char string, it will cause stack over flow!
+    result[result_len] = '\0';
+    result_len=strlen(result);
+    printf ("result length: %d \n",result_len );
+    
+    //There might be no common prefix
+    if (flag == false)
+        return "";
+    
+  return result;
+}
+
+int main() {
+  
+  char input[3][7] = 
+  {
+    {'f', 'l', 'o', 'w', 'e', 'r', '\0'},
+    {'f', 'l', 'o', 'w', '\0'},
+    {'f', 'l', 'i', 'g', 'h', 't', '\0'}
+  };
+  
+  char* output;
+
+  int rowLength[3] = {0,0,0};
+  
+  //Note!! becuase the input is a double pointer, we need to change each array element as a char pointer as well!
+  
+  char* row_address[3];
+  for (int i = 0; i < 3; i++) {
+    row_address[i] = input[i];
+    printf ("row_address %p \n, ", row_address[i]);
+    rowLength[i] = strlen(row_address[i]);
+    printf ("rowLength %d \n, ",  rowLength[i]);
+  }
+  
+  printf ("input address %p \n, ", input);
+
+  for (int i = 0; i < 3; i++) {
+    printf ("%d\n",rowLength[i] );
+  }
+  printf ("before function \n" );
+  
+//Note: Cannot put input because input is not char**!!!!!!!!!!!!!
+  //output = longestCommonPrefix(input, 3);
+  output = longestCommonPrefix(&row_address, 3);
+
+  int out_length = strlen(output);
+    
+  for (int i = 0; i < out_length; i++) {
+    printf ("%c",output[i] );
+  }
+  return 0;
+}
+
+
