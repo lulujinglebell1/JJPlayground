@@ -1,0 +1,48 @@
+class Solution {
+public:
+  
+    void generateParenthesis_recursive(vector<string>* result, string cur_string, int open_count, int close_count, int input) {
+      //stopping condition
+      if ((int)cur_string.length() == input*2)
+      {
+        (*result).push_back(cur_string);
+      printf ("push back\n");
+        return;
+      }
+      
+      if (open_count < input) {
+        //cur_string = cur_string + "(";
+        //open_count++;
+        printf ("open_count < input\n");
+        printf ("cur_string: %s \n",cur_string.c_str());
+        printf ("open_count: %d \n",open_count);
+        printf ("close_count: %d \n\n",close_count);
+
+        generateParenthesis_recursive(result, cur_string+"(", open_count+1, close_count, input);
+      }
+          
+      if (close_count < open_count) {
+        //cur_string = cur_string + ")";
+        //close_count++;
+        printf ("close_count < input\n");
+        printf ("cur_string: %s \n",cur_string.c_str());
+        printf ("open_count: %d \n",open_count);
+        printf ("close_count: %d \n\n",close_count);
+        generateParenthesis_recursive(result, cur_string+")", open_count, close_count+1, input);
+      }
+        printf ("loop once\n");
+      return;
+
+    }
+
+    vector<string> generateParenthesis(int n) {
+      vector<string> result;
+      string cur_string = "";
+      int open_count =0;
+      int close_count =0;
+      
+      generateParenthesis_recursive(&result, cur_string, open_count, close_count, n);
+      
+      return result;
+    }
+};
