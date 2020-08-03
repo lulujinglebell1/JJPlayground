@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h> //for malloc
+
+// To execute C, please define "int main()"
+
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+
+
+int** generate(int numRows, int* returnSize, int** returnColumnSizes){
+
+  *returnSize = numRows;
+  
+  printf ("Point#1\n");
+
+
+  //returnColumnSizes can be generate as well
+  *returnColumnSizes = (int*) malloc (sizeof(int)*(numRows));
+  if ( *returnColumnSizes  == NULL){
+       printf ("Point#2\n");
+  }  
+  //Node: need to put () to "*returnColumnSizes" otherwise stack overflow!!! 
+  for (int i = 0; i < numRows; i++) {
+    printf ("address %p\n", &(*returnColumnSizes)[i]);
+    (*returnColumnSizes)[i] = i+1;
+    printf ("value %d\n", (*returnColumnSizes)[i]);
+
+
+  }
+  
+  printf ("Point#3\n");
+  //allocate the result memory
+  int** result = (int**)malloc (sizeof(int*)*numRows);
+  
+  int cur_row_size;
+  
+  //start the geneation 
+  for (int i = 0; i < numRows; i++) {
+    cur_row_size = i+1;
+    int* row_result = (int*) malloc(sizeof(int)*cur_row_size);
+    
+    for (int j = 0; j < cur_row_size; j++) {
+      if ((j == 0) || (j == cur_row_size-1)) {
+        row_result[j] = 1;
+      } else {
+        row_result[j] = result[i-1][j-1] + result[i-1][j];
+      }
+    }
+    //push the row_result to the result
+    result[i] = row_result;
+  }
+  
+  return result;
+}
+
+
+
+int main() {
+  int numRows =5;
+  int** result;
+  int returnSize;
+  int* returnColumnSizes;
+  result=generate(numRows, &returnSize,&returnColumnSizes);
+  for (int i =0; i < numRows; i++){
+    for (int j = 0; j< returnColumnSizes[i]; j++) {
+        printf ("%d",result[i][j] );
+    }
+        printf ("\n" );
+  }
+
+  return 0;
+}
+
