@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// To execute C, please define "int main()"
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* spiralOrder(int** matrix, int matrixSize, int* matrixColSize, int* returnSize){
+  //Special case handling: input is []
+  if(matrixSize==0) {
+    *returnSize= 0;
+        return NULL;
+  }
+  
+  int* result = (int*)malloc(sizeof(int)*matrixSize*(*matrixColSize));
+  int result_index = 0;
+  
+  int row_start = 0;
+  int row_end = matrixSize - 1;
+  int col_start = 0;
+  int col_end = (*matrixColSize) -1;
+  
+  while ((row_start <= row_end) && (col_start <= col_end) ) {
+
+    for (int i = col_start; i <= col_end; i++) {
+      result[result_index] = matrix[row_start][i];
+      result_index++;
+    }
+    row_start++;
+
+    for (int i = row_start; i <=row_end; i++) {
+      result[result_index] = matrix[i][col_end];
+      result_index++;
+    }
+    col_end--;
+    
+    if (row_start <= row_end) {
+      for (int i = col_end; i >= col_start; i--) {
+        result[result_index] = matrix[row_end][i];
+        result_index++;
+      }
+    }
+    row_end--;
+    
+    if (col_start <= col_end) {
+      for (int i = row_end; i >= row_start; i--) {
+        result[result_index] = matrix[i][col_start];
+        result_index++;
+      }
+    }
+    col_start++;
+  }
+  *returnSize= matrixSize*matrixColSize[0];
+  return result;
+}
+
+
+int main() {
+  int row1[3] = {1,2,3};
+  printf("row1 address: %p \n",row1 );
+  printf("row1[0]: %d \n",(*row1) );
+
+  int row2[3] = {4,5,6};
+  printf("row2 address: %p \n",row2 );
+
+  int row3[3] = {7,8,9};
+  printf("row3 address: %p \n",row3 );
+
+  int* matrix[3] = {row1,row2,row3};
+  //int matrix = {{1,2,3},{6,9,8},{7,4,5}};
+  int matrixSize = 3;
+  int matrixColSize = 3;
+  int returnSize;
+  
+  int* result;
+  result = spiralOrder(matrix, matrixSize, &matrixColSize, &returnSize);
+
+  return 0;
+}
