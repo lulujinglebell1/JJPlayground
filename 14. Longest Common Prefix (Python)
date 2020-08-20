@@ -1,0 +1,33 @@
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        result = ""
+
+        input_length = len(strs)
+        if input_length == 0:
+            return result
+    
+        shortest_len = len(strs[0])
+        flag = True
+        
+        # find the shortest length of the input
+        for i in range (input_length):
+            cur_length = len(strs[i])
+            shortest_len = min (cur_length, shortest_len)
+            
+        for i in range (shortest_len):
+            cur_char = strs[0][i]
+            print cur_char
+            for j in range (1, input_length):
+                print ("\n %d",j)
+                if cur_char != strs[j][i]:
+                    flag = False
+            if flag == True:
+                result=result+cur_char
+            else:
+                break
+                
+        return result
