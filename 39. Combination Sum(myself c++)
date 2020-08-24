@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>    // std::sort
+
+using namespace std;
+/*
+Input: candidates = [2,3,5], target = 8,
+A solution set is:
+[
+  [2,2,2,2],
+  [2,3,3],
+  [3,5]
+]
+*/
+
+class Solution {
+public:
+  
+    void combinationSum(vector<int>& candidates, vector<vector<int>>& result, vector<int> cur_vector, int cur_result_sum, int start_index, int target){
+     
+      //stop condition: cur_result_sum == target, push to the result
+      if (cur_result_sum == target) {
+        result.push_back(cur_vector);
+        return;
+      }
+      
+      //from startIndex to end value, 
+      for (int i = start_index; i < (int) candidates.size(); i++) {
+        //no need to continue from this point on since the rest will not qualify
+        if (cur_result_sum+candidates[i] > target) {
+          return;
+        }
+        cur_vector.push_back(candidates[i]);
+        combinationSum(candidates, result,cur_vector, cur_result_sum+candidates[i],i, target);
+        cur_vector.pop_back();
+      }
+      
+      return;
+    }
+  
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+      vector<vector<int>> result;
+      int cur_result_sum = 0;
+      int start_index = 0;
+      vector<int> cur_vector;
+      sort(candidates.begin(),candidates.end());
+      combinationSum(candidates, result,cur_vector, cur_result_sum,start_index, target);
+
+      return result;
+        
+    }
+};
