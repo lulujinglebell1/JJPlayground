@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>    // std::sort
+
+using namespace std;
+
+class Solution {
+public:
+  
+  
+    void permute_recur(vector<int>& nums, vector<int> cur_result,vector<bool> used_track,vector<vector<int>>& result){
+      if(cur_result.size()==nums.size()) {
+        result.push_back(cur_result);
+        return;
+      }
+      
+      for (int i = 0; i < (int)nums.size(); i++){
+        if(used_track[i] == false){
+          used_track[i]=true;
+          cur_result.push_back(nums[i]);
+          permute_recur(nums, cur_result,used_track,result);
+          used_track[i]=false;
+          cur_result.pop_back();
+        }
+      }
+      
+      return;
+      
+    }
+
+
+    vector<vector<int>> permute(vector<int>& nums) {
+      vector<vector<int>> result;
+      vector<bool> used_track = {false, false, false};
+      vector<int> cur_result;
+      permute_recur(nums, cur_result,used_track,result);
+      
+      return result;
+    }
+};
+
+// To execute C++, please define "int main()"
+int main() {
+  Solution s;
+  vector<int> input = {1,2,3};
+  vector<vector<int>> output;
+  output = s.permute(input);
+  
+  for (int i = 0; i < (int)output.size(); i++) {
+    vector<int> cur_row = output[i];
+    for (int j = 0; j < (int) cur_row.size(); j++) {
+      printf("%d ", output[i][j]);
+    }
+    printf("\n");
+
+  }
+  return 0;
+}
