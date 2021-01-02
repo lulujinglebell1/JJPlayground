@@ -1,0 +1,112 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+
+58. Length of Last Word
+Easy
+
+Given a string s consists of some words separated by spaces, return the length of the last word in the string. If the last word does not exist, return 0.
+
+A word is a maximal substring consisting of non-space characters only.
+
+
+
+Example 1:
+
+Input: s = "Hello World"
+Output: 5
+Example 2:
+
+Input: s = " "
+Output: 0
+
+
+Constraints:
+
+1 <= s.length <= 104
+s consists of only English letters and spaces ' '.
+*/
+
+
+/*
+用一个VALUE 记录SPACE的位置，移动过程不断UPDATE SPACE 位置，
+用一个VALUE 记录当前WORLD 的长度，一旦遇见SPACE 就把长度归零， 然后UPDATE SPACE 的位置
+如果当前的TRACKING CHAR 已经到尾也没有见到SPACE,那就用当前INDEX 减去SPACE 的位置
+*/
+
+/*
+Test Cases:
+//"    " --ok
+//"hi" --ok
+//"hi  hi" --ok
+//"  hi" --ok
+//"hi "
+//"hi  "
+*/
+
+
+class Solution {
+public:
+	int lengthOfLastWord(string s) {
+		int cur_word_len = 0;
+		int space_index = -1; ///so "hi" case is covered
+		int last_word_len = 0;
+
+		int string_len = s.size();
+
+		for (int i = 0; i < string_len; i++) {
+			char cur_char = s[i];
+
+			if ((is_space(cur_char) == true)) {
+				space_index = i;
+
+				if (i != 0) {
+					if (is_space(s[i - 1]) == false) {
+						last_word_len = cur_word_len;
+					}
+				}
+					cur_word_len = 0;
+			}
+			else {
+				cur_word_len = i - space_index;
+			}
+
+			//for coner case "hi ":
+			if ((cur_char == ' ') && (i == string_len - 1)) {
+				cur_word_len = last_word_len;
+			}
+		}
+
+		return cur_word_len;
+	}
+
+	bool is_space(char input_char) {
+		bool is_space = false;
+
+		if (input_char - ' ' == 0) {
+			is_space = true;
+		}
+		return is_space;
+	}
+};
+
+int main() {
+	Solution s;
+	int last_word_len = s.lengthOfLastWord("  Today is a nice day");
+
+	assert(last_word_len == 3);
+	return 0;
+}
+
+
+
+
+
