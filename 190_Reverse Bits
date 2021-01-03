@@ -1,0 +1,75 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+190. Reverse Bits
+Easy
+Reverse bits of a given 32 bits unsigned integer.
+
+Note:
+
+Note that in some languages such as Java, there is no unsigned integer type. In this case, both input and output will be given as a signed integer type. They should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned.
+In Java, the compiler represents the signed integers using 2's complement notation. Therefore, in Example 2 above, the input represents the signed integer -3 and the output represents the signed integer -1073741825.
+Follow up:
+
+If this function is called many times, how would you optimize it?
+
+
+
+Example 1:
+
+Input: n = 00000010100101000001111010011100
+Output:    964176192 (00111001011110000010100101000000)
+Explanation: The input binary string 00000010100101000001111010011100 represents the unsigned integer 43261596, so return 964176192 which its binary representation is 00111001011110000010100101000000.
+Example 2:
+
+Input: n = 11111111111111111111111111111101
+Output:   3221225471 (10111111111111111111111111111111)
+Explanation: The input binary string 11111111111111111111111111111101 represents the unsigned integer 4294967293, so return 3221225471 which its binary representation is 10111111111111111111111111111111.
+
+
+Constraints:
+
+The input must be a binary string of length 32
+*/
+
+/*
+uint32_t: 
+->https://en.cppreference.com/w/cpp/types/integer
+->Defined in header <cstdint>
+->unsigned integer type with width of exactly 8, 16, 32 and 64 bits respectively (provided only if the implementation directly supports the type)(typedef)
+
+Solving Method:
+-very good bit manipulation problem!
+-i is running from 0 to 31
+-so we move 1 from position 0 to 31 (i)
+-if the position is equal to 1
+-then we make position 31-i equal to 1 as well by doing "result += 1 << (31 - i);"
+*/
+class Solution {
+public:
+	uint32_t reverseBits(uint32_t n) {
+		uint32_t result = 0;
+		for (int i = 0; i < 32; i++) {
+			if ((1 << i) & n) {
+				result += 1 << (31 - i);
+			}
+		}
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	uint32_t input = -3;
+	assert (s.reverseBits(input) == -1073741825);
+	return 0;
+}
+
