@@ -1,0 +1,80 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+204. Count Primes
+Easy
+Count the number of prime numbers less than a non-negative number, n.
+Example 1:
+
+Input: n = 10
+Output: 4
+Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
+Example 2:
+
+Input: n = 0
+Output: 0
+Example 3:
+
+Input: n = 1
+Output: 0
+
+Constraints:
+0 <= n <= 5 * 106
+
+
+Solving Method:
+->What are Prime Numbers?
+In math, prime numbers are whole numbers greater than 1, that have only two factors – 1 and the number itself.
+Prime numbers are divisible only by the number 1 or itself.
+For example, 2, 3, 5, 7 and 11 are the first few prime numbers.
+
+->Fun Facts
+1 is neither a prime number nor a composite number.
+The only even prime number is 2.
+No prime number greater than 5  ends in a 5.
+
+https://www.youtube.com/watch?v=PypkiVlTRa4
+->i used only 20 mins to solve this problem after watching this video... LOL
+*/
+
+class Solution {
+public:
+	int countPrimes(int n) {
+		//make a table of true and false table to track numbers from 0 to n, determine if it is a prime number
+		vector<bool> track_table (n+1, true);
+		int result = 0;
+
+		//loop from 2 to i*i <=n, becase if i*i > n, no need to check --> this is the hardest part to understand -> The loop stopping condition
+		for (int i = 2; i*i < n; i++) {
+			//for each of i, let it times 2,3,4,5....etc (j) and make track_table[i*j] == false, becase those are not prime number
+			for (int j = 2; j*i < n; j++) {
+				if (track_table[j*i] == true) {
+					track_table[j*i] = false;
+				}
+			}
+		}
+
+		//now we generated a table of prime number (ture or false) and we can just count the total prime numbers
+		for (int i = 2; i < n; i++) {
+			if (track_table[i] == true) {
+				result++;
+			}
+		}
+
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	assert (s.countPrimes(10) == 4);
+	return 0;
+}
