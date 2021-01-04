@@ -1,0 +1,29 @@
+/*
+237. Delete Node in a Linked List
+Write a function to delete a node in a singly-linked list. You will not be given access to the head of the list, instead you will be given access to the node to be deleted directly.
+It is guaranteed that the node to be deleted is not a tail node in the list.
+
+Solving Method:
+wow i only spent 10 mins to solve this problem....improve a lot! 
+*/
+
+struct ListNode {
+	int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+ };
+
+class Solution {
+public:
+	void deleteNode(ListNode* node) {
+		int next_value = node->next->val;
+		ListNode* next_next_node = node->next->next;
+		//change the node value
+		node->val = next_value;
+		//delete next node
+		delete node->next;
+		//make the node point to next next node
+		node->next = next_next_node;
+		return;
+	}
+};
