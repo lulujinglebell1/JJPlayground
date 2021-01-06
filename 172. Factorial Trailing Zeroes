@@ -1,0 +1,72 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+172. Factorial Trailing Zeroes
+Easy
+Given an integer n, return the number of trailing zeroes in n!.
+
+Follow up: Could you write a solution that works in logarithmic time complexity?
+
+
+
+Example 1:
+
+Input: n = 3
+Output: 0
+Explanation: 3! = 6, no trailing zero.
+Example 2:
+
+Input: n = 5
+Output: 1
+Explanation: 5! = 120, one trailing zero.
+Example 3:
+
+Input: n = 0
+Output: 0
+
+
+Constraints:
+0 <= n <= 104
+
+Solving Method:
+after watchng video https://www.youtube.com/watch?v=T3lhjrX2z9k
+i spent 20 mins to understand and solve this problem.
+
+->6! =6x5x4x3x2x1
+-> the trailing zero is equal to how many 2*5=10 that we have
+->since 2 is very easy to get, 5 is harder to get, so  the trailing zero is equal to how many 5 that we have
+-> ex: n= 25, we have --> 25=5x5, 20=4x5, 15=3x5. 10=2x5. 5=1x5 (total 6 of 5) so result trailing zero is 6
+->
+*/
+
+
+class Solution {
+public:
+	int trailingZeroes(int n) {
+		int result = 0;
+
+		//一直除到n不能再分成5份大饼了
+		while (n != 0) {
+
+			result = result + n / 5;
+			//看看n 是不是可以再细分5份大饼
+			n = n / 5; 
+		}
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	assert(s.trailingZeroes(15) == 3);
+	assert(s.trailingZeroes(25) == 6);
+	return 0;
+}
