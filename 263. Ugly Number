@@ -1,0 +1,73 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+263. Ugly Number
+Easy
+Write a program to check whether a given number is an ugly number.
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.
+
+Example 1:
+
+Input: 6
+Output: true
+Explanation: 6 = 2 × 3
+Example 2:
+
+Input: 8
+Output: true
+Explanation: 8 = 2 × 2 × 2
+Example 3:
+
+Input: 14
+Output: false
+Explanation: 14 is not ugly since it includes another prime factor 7.
+Note:
+
+1 is typically treated as an ugly number.
+Input is within the 32-bit signed integer range: [−231,  231 − 1].
+
+Solving Method:
+-> watched https://www.youtube.com/watch?v=1wpe7yeqZd0
+-> loop from 2 to 3 to 5
+-> divide the num by 2 continuely until there is remining (num%2 != 0) which means it can not divided by 2 anymore, then we do the same for 3 and 5
+-> 不断地切大饼，不断切2 份，然后3分，然后5份。。。 看看切完有没有剩余， 看看最后是不是只有一份了
+->if at the end, num is not equal to 1, then it means it is not a ugly number 
+->spent 20 mins to solve this problem after watching the video
+*/ 
+
+class Solution {
+public:
+	bool isUgly(int num) {
+		bool result = false;
+		vector<int> prime_int = { 2,3,5 };
+		
+		//0 is special case, because 0 will cause infinite loop below:
+		if (num == 0) {
+			return false;
+		}
+
+		for (int i = 0; i < prime_int.size(); i++) {
+			while (num % prime_int[i] == 0) {
+				num = num / prime_int[i];
+			}
+		}
+		if (num == 1)
+			return true;
+
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	return 0;
+}
