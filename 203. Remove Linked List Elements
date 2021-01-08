@@ -1,0 +1,80 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+203. Remove Linked List Elements
+Easy
+Remove all elements from a linked list of integers that have value val.
+
+Example:
+
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+
+sovling method:
+->#1: need to start from a Node that is not euqal to val
+->#2: need to loop and delete continuely until the nextNode is not equal to val EX:1-2-2-1, val=2
+->spent 45 mins on this quesiton. since there are lots of corner cases that i need to consider such as the above 2 case and more on the comment
+*/
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+
+
+class Solution {
+public:
+	ListNode* removeElements(ListNode* head, int val) {
+		ListNode* removeNode;
+		ListNode* curNode = head;
+		ListNode* nextNode;
+
+		//case: head = removeNode, need to start from a Node that is not euqal to val
+		//case: removeNode -> NULL
+		while (curNode != NULL && curNode->val == val) {
+			removeNode = curNode;
+			nextNode = removeNode->next;
+			delete removeNode;
+			curNode = nextNode;
+		}
+		head = curNode;
+
+		//case: [1, removeNode, removeNode, 1] 
+		//case:  head = NULL ->OK
+		//case: 1->NULL -> OK
+
+		while (curNode != NULL) {
+			nextNode = curNode->next;
+			//need to loop and delete continuely until the nextNode is not equal to val EX:1-2-2-1, val=2
+			while (nextNode != NULL && nextNode->val == val) {
+					removeNode = nextNode;
+					curNode->next = removeNode->next;
+					delete removeNode;
+					nextNode = curNode->next;
+			}
+			curNode = nextNode;
+		}
+		return head;
+	}
+};
+
+int main() {
+	Solution s;
+	ListNode node4(4, NULL);
+	ListNode node3(3, &node4);
+	ListNode node2(2, &node3);
+	ListNode head(1, &node2);
+	assert(s.removeElements(&head, 4));
+	return 0;
+}
