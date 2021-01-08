@@ -1,0 +1,64 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+231. Power of Two
+Easy
+Given an integer n, return true if it is a power of two. Otherwise, return false.
+An integer n is a power of two, if there exists an integer x such that n == 2x.
+
+Example 1:
+
+Input: n = 1
+Output: true
+Explanation: 20 = 1
+Example 2:
+
+Input: n = 16
+Output: true
+Explanation: 24 = 16
+Example 3:
+
+Input: n = 3
+Output: false
+Example 4:
+
+Input: n = 4
+Output: true
+Example 5:
+
+Input: n = 5
+Output: false
+
+
+Constraints:
+-231 <= n <= 231 - 1
+
+Solving Method:
+-> starting from i = 1 and times two continusly
+-> after watch video :https://www.youtube.com/watch?v=uVAvuyah9Ek 20mins
+*/
+
+class Solution {
+public:
+	bool isPowerOfTwo(int n) {
+		//i has to be long, if i is int, it will get error: runtime error: signed integer overflow: 1073741824 * 2 cannot be represented in type 'int' (solution.cpp)
+		long i = 1;
+		while (i < n) {
+			i = i * 2;
+		}
+		return (i == n);
+	}
+};
+
+int main() {
+	Solution s;
+	return 0;
+}
