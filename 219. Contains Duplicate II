@@ -1,0 +1,65 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+using namespace std;
+
+/*
+219. Contains Duplicate II
+Easy
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1
+Output: true
+Example 3:
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+
+solving method:
+->create a tracking table map<value, locationIndex>
+->if value.count == 0, input the value, and record the current location
+->else current location - the recorded location 
+->if > than k then return false
+-> else return true
+->spent only 20 mins to solve this problem after review the question 
+*/
+
+class Solution {
+public:
+	bool containsNearbyDuplicate(vector<int>& nums, int k) {
+		map<int, int> trackTable;
+		for (int i = 0; i < nums.size(); i++) {
+			if (trackTable.count(nums[i]) == 0) {
+				trackTable[nums[i]] = i;
+			}
+			else {
+				if (i - trackTable[nums[i]] > k) {
+					//update the current location and continue the tracking:
+					trackTable[nums[i]] = i;
+				}
+				else {
+					return true;
+				}
+			}
+		}
+		//reach the end but cannot find anything
+		return false;
+	}
+};
+
+int main() {
+	Solution s;
+
+	return 0;
+}
