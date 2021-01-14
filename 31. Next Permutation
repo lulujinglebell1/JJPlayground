@@ -1,0 +1,106 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+/*
+31. Next Permutation
+Medium
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such an arrangement is not possible, it must rearrange it as the lowest possible order (i.e., sorted in ascending order).
+
+The replacement must be in place and use only constant extra memory.
+Example 1:
+
+Input: nums = [1,2,3]
+Output: [1,3,2]
+Example 2:
+
+Input: nums = [3,2,1]
+Output: [1,2,3]
+Example 3:
+
+Input: nums = [1,1,5]
+Output: [1,5,1]
+Example 4:
+
+Input: nums = [1]
+Output: [1]
+
+
+Constraints:
+
+1 <= nums.length <= 100
+0 <= nums[i] <= 100
+
+solving method:
+->after watch video https://www.youtube.com/watch?v=w58KFpW5Pjk
+->spent more than 1 hour to solve this since i ran into some heap overflow bug 
+->because i did not use the sort function correctly.
+->detial soving method can refer to the comment below
+*/
+class Solution {
+public:
+	void nextPermutation(vector<int>& nums) {
+		int replaceIndex = nums.size() - 2;
+		int largerThanReplace;
+
+		if (nums.size() == 0) {
+			return;
+		}
+		//first find the position that needed to be replaced
+		//from left to right, compare the neibougt 2 number
+		//once find a position nums[left] < nums[right]
+		//that is the index position that replacement needed to be take place
+		//start from nums.size() - 2 position compare with nums.size() - 1 
+
+		while (replaceIndex >= 0) {
+			if (nums[replaceIndex] < nums[replaceIndex + 1])
+			{
+				break;
+			}
+			else {
+				replaceIndex--;
+			}
+		}
+
+		//case: 6 5 4 3 2 1
+		//If such an arrangement is not possible, 
+		//it must rearrange it as the lowest possible order (sorted in ascending order).
+		if (replaceIndex < 0) {
+			sort(nums.begin(), nums.end());
+			return;
+		}
+
+		//now we found the position, 
+		//then we need to see which number we should replace it with
+		//we need to find a number that is larger and closest to the replace number
+		largerThanReplace = replaceIndex + 1;
+		while ((largerThanReplace < (int)nums.size()) && (nums[largerThanReplace] > nums[replaceIndex])) {
+			largerThanReplace++;
+		}
+		//larger and closest to the replace number is nums[largerThanReplace-1]
+		//so we swap the two number 
+		int tmp = nums[replaceIndex];
+		nums[replaceIndex] = nums[largerThanReplace - 1];
+		nums[largerThanReplace - 1] = tmp;
+
+		//now we just need to sort the rest in accending order
+		sort(nums.begin() + (replaceIndex + 1), nums.end());
+		return;
+	}
+};
+
+int main() {
+	Solution s;
+	vector<int> input = {1,2,3};
+	s.nextPermutation(input);
+	return 0;
+}
