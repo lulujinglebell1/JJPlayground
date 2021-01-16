@@ -1,0 +1,102 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+
+/*
+43. Multiply Strings
+Medium
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+Example 1:
+
+Input: num1 = "2", num2 = "3"
+Output: "6"
+Example 2:
+
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+
+Constraints:
+1 <= num1.length, num2.length <= 200
+num1 and num2 consist of digits only.
+Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+
+solving method:
+after watch video, i spent >1 hour to solve this myself
+we need to understand the trick to solve this quesiton first
+once we understand, we should able to solve it within 30 mins
+make used of the to_sting funciton which convert the digit to string
+and append the "string" to the result
+*/
+
+class Solution {
+public:
+	string multiply(string num1, string num2) {
+		int outputLen = num1.size() + num2.size();
+		string result;
+		int mulResult;
+		vector<int> output(outputLen);
+
+		if (num1.length() == 0 || num2.length() == 0)
+			return "0";
+
+		for (int i = num1.size() - 1; i >= 0; i--) {
+			for (int j = num2.size() - 1; j >= 0; j--) {
+				//do the single mutiplecaion with two digit
+				char char1 = num1[i];
+				char char2 = num2[j];
+
+				int digit1 = (int)(char1 - '0');
+				int digit2 = (int)(char2 - '0');
+				mulResult = digit1 * digit2;
+				//find the position where we need to modify the result:
+				int rightPositon = j + i + 1;
+				int legtPosition = j + i;
+				//do the addition do get the final modification:
+				//the reason we only do the rightPisition muliple only 
+				//is because there might be a increment occur to the 
+				//left position when the addition occur
+				mulResult = mulResult + output[rightPositon];
+
+				output[rightPositon] = mulResult % 10;
+				//theis leftPosition could be a two digit number (!!!important to undertand here)
+				//but it it ok since it will add up to the next iteration
+				output[legtPosition] = output[legtPosition] + mulResult / 10;
+			}
+		}
+
+		for (int i = 0; i < outputLen; i++) {
+			if (result.length() != 0 || output[i] != 0) {
+				string appendString = to_string(output[i]);
+				result.append(appendString);
+			}
+		}
+
+		//num1 and num2 consist of digits only.
+		//Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+		//so if result.length == 0, it means num1 ==0 and num2 ==2, so we return 0
+		if (result.length() == 0) {
+			return "0";
+		}
+
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	string inputString1 = "99";
+	string inputString2 = "9";
+	string outputSting;
+	outputSting = s.multiply(inputString1, inputString2);
+	return 0;
+}
