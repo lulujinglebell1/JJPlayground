@@ -1,0 +1,76 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+
+/*
+56. Merge Intervals
+Medium
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: intervals = [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+Constraints:
+1 <= intervals.length <= 104
+intervals[i].length == 2
+0 <= starti <= endi <= 104
+
+solving method:
+-spent only 15mins on this quesiton after knowing that 
+-sort(intervals.begin(), intervals.end()) can sort the first element of the vectors
+-its more like a simple question than a medium question to me
+*/
+
+class Solution {
+public:
+	vector<vector<int>> merge(vector<vector<int>>& intervals) {
+		vector<vector<int>> result;
+		//need to make sure the first value of the interval are sorted (!!!important!!!):
+		sort(intervals.begin(), intervals.end());
+
+		for (int i = 0; i < (int) intervals.size(); i++) {
+			vector<int> curInterval = intervals[i];
+
+			if (i == 0) {
+				result.push_back(curInterval);
+			}
+			else {
+				vector<int> lastResultInterval = result[result.size() - 1];
+				if (lastResultInterval[1] < curInterval[0]) {
+					//no overlap, just push the cur to the result
+					result.push_back(curInterval);
+				}
+				else {
+					if (lastResultInterval[1] < curInterval[1]) {
+						//need to modify the last interval of the result
+						result[result.size() - 1][1] = curInterval[1];
+					}
+					//else not need to push back to the result 
+					//and we can contunue to the next interval
+				}
+			}
+		}
+
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	return 0;
+}
