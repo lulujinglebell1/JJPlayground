@@ -1,0 +1,171 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+
+/*
+57. Insert Interval
+Medium
+Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+
+You may assume that the intervals were initially sorted according to their start times.
+Example 1:
+
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+Example 2:
+
+Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+Output: [[1,2],[3,10],[12,16]]
+Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
+Example 3:
+
+Input: intervals = [], newInterval = [5,7]
+Output: [[5,7]]
+Example 4:
+
+Input: intervals = [[1,5]], newInterval = [2,3]
+Output: [[1,5]]
+Example 5:
+
+Input: intervals = [[1,5]], newInterval = [2,7]
+Output: [[1,7]]
+
+
+Constraints:
+
+0 <= intervals.length <= 104
+intervals[i].length == 2
+0 <= intervals[i][0] <= intervals[i][1] <= 105
+intervals is sorted by intervals[i][0] in ascending order.
+newInterval.length == 2
+0 <= newInterval[0] <= newInterval[1] <= 105
+
+case: new interval insert to the first of the result
+*/
+
+class Solution {
+public:
+	vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+		vector<vector<int>> result;
+		bool newIntervalPushedCheck = false;
+
+		//special case #1: [] push [5, 7] ==>[5, 7]
+		if (intervals.size() == 0) {
+			if (newInterval.size() != 0) {
+				result.push_back(newInterval);
+				return result;
+			}
+		}
+
+		for (int i = 0; i < (int)intervals.size(); i++) {
+			vector<int> curInterval = intervals[i];
+
+			//lopp until we find intervals[i][0] is larger than newInterval[0]
+			if (newIntervalPushedCheck == false) {
+
+				if (curInterval[0] < newInterval[0]) {
+					result.push_back(curInterval);
+				}
+				else
+				{
+					//special case #2:
+					//push new interval to the top of the result:
+					//case1: [45] push [12] ==>[12][45]
+					//case2: [45] push [16] ==>[16]
+					if (i == 0) {
+						//case1: [45] push [12] ==>[12][45]
+						if (curInterval[0] > newInterval[1]) {
+							result.push_back(newInterval);
+							result.push_back(curInterval);
+						}
+						else {
+							//case2: [45] push [16] ==>[16]
+							result.push_back(newInterval);
+						}
+					}
+
+					//general case insert the new into the middle of the interval:
+					//solving method is that we deal with the new with the last first, 
+					//and push to the last
+					//then deal with the last with the cur
+					vector<int> lastResultInterval = result[result.size() - 1];
+
+					if (newInterval[0] > lastResultInterval[1]) {
+						result.push_back(newInterval);
+					}
+					else {
+						result[result.size() - 1][1] = max(newInterval[1], lastResultInterval[1]);
+					}
+
+					//now deal withe last and the cur
+					lastResultInterval = result[result.size() - 1];
+
+					if (curInterval[0] > lastResultInterval[1]) {
+						result.push_back(curInterval);
+					}
+					else {
+						result[result.size() - 1][1] = max(curInterval[1], lastResultInterval[1]);
+					}
+					newIntervalPushedCheck = true;
+				}
+			}
+			//now we have push the proper new interval to the result
+			//the logic of the rest of the code is the same as the last question:
+			else {
+				vector<int> lastResultInterval = result[result.size() - 1];
+				if (lastResultInterval[1] < curInterval[0]) {
+					//no overlap, just push the cur to the result
+					result.push_back(curInterval);
+				}
+				else {
+					if (lastResultInterval[1] < curInterval[1]) {
+						//need to modify the last interval of the result
+						result[result.size() - 1][1] = curInterval[1];
+					}
+					//else not need to push back to the result 
+					//and we can contunue to the next interval
+				}
+			}
+
+		}
+
+		//special case #3: insert the new interval to the end of the interval:
+		//newIntervalPushedCheck == false; is for case [15] push [27] ==>[17]
+		if (newIntervalPushedCheck == false)
+		{
+			vector<int> lastResultInterval = result[result.size() - 1];
+			if (newInterval[0] > lastResultInterval[1]) {
+				result.push_back(newInterval);
+			}
+			else
+			{
+				result[result.size() - 1][1] = max(newInterval[1], lastResultInterval[1]);
+			}
+		}
+		return result;
+	}
+};
+
+int main() {
+	Solution s;
+	vector<vector<int>> result;
+
+	vector<vector<int>> intervals1{ {1,5} };
+	vector<int> newInterval1 = { 2,7 };
+	result = s.insert(intervals1, newInterval1);
+
+	vector<vector<int>> intervals{ {3,5},{6,7} };
+	vector<int> newInterval = {4,8};
+	result = s.insert(intervals, newInterval);
+
+
+	return 0;
+}
