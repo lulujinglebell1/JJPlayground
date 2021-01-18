@@ -1,0 +1,91 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+
+/*
+63. Unique Paths II
+Medium
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+An obstacle and space is marked as 1 and 0 respectively in the grid.
+
+Example 1:
+Input: obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
+Output: 2
+Explanation: There is one obstacle in the middle of the 3x3 grid above.
+There are two ways to reach the bottom-right corner:
+1. Right -> Right -> Down -> Down
+2. Down -> Down -> Right -> Right
+Example 2:
+Input: obstacleGrid = [[0,1],[0,0]]
+Output: 1
+
+Constraints:
+m == obstacleGrid.length
+n == obstacleGrid[i].length
+1 <= m, n <= 100
+obstacleGrid[i][j] is 0 or 1.
+
+solving method:
+-i only spent 10 mins to solve this quesion after sloving problem 62:Unique Paths 
+-the solving method is same just need to add a check
+-if there is an obstacle then return 0 for that path
+-i am so smart~
+*/
+
+class Solution {
+public:
+
+	int uniquePathsHelper (int m, int n, vector<vector<int>> & pathSum, vector<vector<int>>& obstacleGrid) {
+		//start from (00)
+		//when out of boundry then return 0:
+		if (m < 0 || n < 0) {
+			return 0;
+		}
+
+		if (obstacleGrid[m][n] == 1) {
+			return 0;
+		}
+
+		if (m == 0 && n == 0) {
+			return 1;
+		}
+
+		if (pathSum[m][n] > 0) {
+			return pathSum[m][n];
+		}
+
+		//the possible way to the current (mn)position is equal to 
+		//sum of the way to top+left possition
+		int leftPathSum = uniquePathsHelper(m, n-1, pathSum, obstacleGrid);
+		int topPathSum = uniquePathsHelper(m-1, n, pathSum, obstacleGrid);
+		pathSum[m][n] = leftPathSum + topPathSum;
+
+		return pathSum[m][n];
+	}
+
+	int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+		int totalRow = obstacleGrid.size();
+		int totalCol = obstacleGrid[0].size();
+		vector<vector<int>> pathSum(totalRow, vector<int>(totalCol));
+		int result = uniquePathsHelper(totalRow - 1, totalCol - 1, pathSum, obstacleGrid);
+		return result;
+	}
+
+};
+
+int main() {
+	Solution s;
+	vector<vector<int>> pathSum(3, vector<int>(2));
+	s.uniquePathsWithObstacles(pathSum);
+	return 0;
+}
