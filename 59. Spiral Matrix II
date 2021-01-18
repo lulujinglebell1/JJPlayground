@@ -1,0 +1,77 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+
+/*
+59. Spiral Matrix II
+Medium
+Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+Example 1:
+Input: n = 3
+Output: [[1,2,3],[8,9,4],[7,6,5]]
+Example 2:
+Input: n = 1
+Output: [[1]]
+Constraints:
+1 <= n <= 20
+
+solving method:
+-refer to problem 	54	Spiral Matrix
+-two important notes that need to pay attention 
+*/
+class Solution {
+public:
+	vector<vector<int>> generateMatrix(int n) {
+		int rowStart = 0;
+		int rowEnd = n - 1;
+		int colStart = 0;
+		int colEnd = n - 1;
+		//generate a nxn matrix(!!!important syntax!!!)
+		vector<vector<int>> result(n, vector<int>(n));;
+		///(!!!#1important!!!)
+		int count = 1;
+
+		///(!!!#2important!!!)
+		while (count <= n * n) {
+			//top row
+			for (int i = colStart; i <= colEnd; i++) {
+				result[rowStart][i] = count;
+				count++;
+			}
+			rowStart++;
+
+			//right colume
+			for (int i = rowStart; i <= rowEnd; i++) {
+				result[i][colEnd] = count;
+				count++;
+			}
+			colEnd--;
+			//end row
+			for (int i = colEnd; i >= colStart; i--) {
+				result[rowEnd][i] = count;
+				count++;
+			}
+			rowEnd--;
+			//left colume
+			for (int i = rowEnd; i >= rowStart; i--) {
+				result[i][colStart] = count;
+				count++;
+			}
+			colStart++;
+		}
+		return result;
+	}
+};
+int main() {
+	Solution s;
+	s.generateMatrix(3);
+	return 0;
+}
