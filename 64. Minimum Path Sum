@@ -1,0 +1,79 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+/*
+64. Minimum Path Sum
+Medium
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+Note: You can only move either down or right at any point in time.
+Example 1:
+Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
+Output: 7
+Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.
+Example 2:
+Input: grid = [[1,2,3],[4,5,6]]
+Output: 12
+Constraints:
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 200
+0 <= grid[i][j] <= 100
+
+solving method:
+		//initilize all the grid to -1 first, so that we can mark it as done
+		//after we calculated this grid
+		//wihtout this step, it will have time limit exceed error
+		//this can aviod duplicated computation
+		//if we already calculated this grid before, we can just return
+		those are important steps, without them, i will exceed time error
+		-still need to understand why~~
+*/
+class Solution {
+public:
+
+	int minPathSumUtil(vector<vector<int>>&grid, int m, int n, vector<vector<int>> & griMinSumTable)
+	{
+		if (m < 0 || n < 0)
+			return INT_MAX;
+		if (m == 0 && n == 0)
+			return grid[0][0];
+		//(!!!important!!!!)
+		//wihtout this step, it will have time limit exceed error
+		//this can aviod duplicated computation
+		//if we already calculated this grid before, we can just return
+		if (griMinSumTable[m][n] != -1)
+			return griMinSumTable[m][n];
+		int leftPathSum = minPathSumUtil(grid, m, n - 1, griMinSumTable);
+		int topPathSum = minPathSumUtil(grid, m - 1, n, griMinSumTable);
+		griMinSumTable[m][n] = grid[m][n] + min(leftPathSum, topPathSum);
+
+		return griMinSumTable[m][n];
+
+	}
+	int minPathSum(vector<vector<int>>& grid) {
+		int m = grid.size();
+		int n = grid[0].size();
+		int totalRow = grid.size();
+		int totalCol = grid[0].size();
+		//(!!!important!!!!)
+		//initilize all the grid to -1 first, so that we can mark it as done
+		//after we calculated this grid
+		vector<vector<int>> griMinSumTable(totalRow, vector<int>(totalCol,-1));
+		return minPathSumUtil(grid, m - 1, n - 1, griMinSumTable);
+	}
+};
+
+int main() {
+	Solution s;
+	vector<vector<int>> grid = { {1,3,1}, {1,5,1},{4,2,1} };
+	s.minPathSum(grid);
+	return 0;
+}
