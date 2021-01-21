@@ -1,0 +1,123 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+#include<stack>
+
+
+using namespace std;
+/*
+73. Set Matrix Zeroes
+Medium
+Given an m x n matrix. If an element is 0, set its entire row and column to 0. Do it in-place.
+Follow up:
+A straight forward solution using O(mn) space is probably a bad idea.
+A simple improvement uses O(m + n) space, but still not the best solution.
+Could you devise a constant space solution?
+Example 1:
+Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+Output: [[1,0,1],[0,0,0],[1,0,1]]
+Example 2:
+Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+Constraints:
+m == matrix.length
+n == matrix[0].length
+1 <= m, n <= 200
+-231 <= matrix[i][j] <= 231 - 1
+
+
+solving method:
+refer to video:
+https://www.youtube.com/watch?v=1KnLIAvTxjQ
+this method can achieve:
+Time Complexity : O(M×N)
+Space Complexity : O(1)
+more detail mathod can refer to the code common
+*/
+
+
+class Solution {
+public:
+	void setZeroes(vector<vector<int>>& matrix) {
+		bool firstRowZero = false;
+		bool firstColZero = false;
+
+		int totalRow = matrix.size();
+		int totalCol = matrix[0].size();
+
+		if (totalRow == 0 || totalCol == 0) {
+			return;
+		}
+
+		//iterrate the first row and first col to see if there are any zero
+		//this is a special case that needed to be handled first below 
+		// the rest of the code because later this first row&col value 
+		//will be modified
+		for (int i = 0; i < totalCol; i++) {
+			if (matrix[0][i] == 0) {
+				firstRowZero = true;
+				break;
+			}
+		}
+
+		for (int i = 0; i < totalRow; i++) {
+			if (matrix[i][0] == 0) {
+				firstColZero = true;
+				break;
+			}
+		}
+
+		//iterrate from matrix [1][1] to the rest of the matrix
+		//mark the first corresponded row & colume to 0 when see a 0
+		for (int i = 1; i < totalRow; i++) {
+			for (int j = 1; j < totalCol; j++) {
+				if (matrix[i][j] == 0) {
+					matrix[0][j] = 0;
+					matrix[i][0] = 0;
+				}
+			}
+		}
+
+		//iterrate from matrix [1][1] to the rest of the matrix
+		//if the corresponded first row/col == 0
+		//mark itself as 0
+		for (int i = 1; i < totalRow; i++) {
+			for (int j = 1; j < totalCol; j++) {
+				if (matrix[i][0] == 0 || matrix[0][j]==0) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+
+		//mark the first col and row to 0 
+		//if firstColZero/firstRowZero is true
+		if (firstRowZero == true) {
+			for (int i = 0; i < totalCol; i++) {
+				matrix[0][i] = 0;
+			}
+		}
+		if (firstColZero == true) {
+			for (int i = 0; i < totalRow; i++) {
+				matrix[i][0] = 0;
+			}
+		}
+
+		return;
+
+	}
+};
+
+int main() {
+	Solution s;
+	vector<vector<int>> matrix = { {0,1,2,0} ,{3,4,5,2},{1,3,1,5}};
+	vector<vector<int>> matrix2 = { {1,1,1} ,{1,0,1},{1,1,1}};
+
+	s.setZeroes(matrix2);
+	return 0;
+}
