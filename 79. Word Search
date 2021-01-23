@@ -1,0 +1,105 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+#include<stack>
+
+
+using namespace std;
+/*
+79. Word Search
+Medium
+Given an m x n board and a word, find if the word exists in the grid.
+The word can be constructed from letters of sequentially adjacent cells, where "adjacent" cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+Example 1:
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+Output: true
+Example 2:
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+Output: true
+Example 3:
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+Output: false
+Constraints:
+m == board.length
+n = board[i].length
+1 <= m, n <= 200
+1 <= word.length <= 103
+board and word consists only of lowercase and uppercase English letters.
+*/
+
+class Solution {
+public:
+
+	bool search(vector<vector<char>>& board, string word, int rowIndex, int colIndex, int curWordIndex) {
+
+		//seach out of boundry:
+		if (rowIndex >= board.size() || colIndex >= board[0].size() || rowIndex < 0 || colIndex < 0 ) {
+			return false;
+		}
+
+		if (word[curWordIndex] == board[rowIndex][colIndex]) 
+		{
+			//we finish all the seach and found the answer:
+			if (curWordIndex == word.size() - 1) {
+				return true;
+			}
+			else {
+				//continue to seach the next char search
+				//we need to change the checked char, save and put it back later
+				//because "The same letter cell may not be used more than once." (!!!important!!!)
+				char saveChar = board[rowIndex][colIndex];
+				board[rowIndex][colIndex] = '-';
+				bool result = (search(board, word, rowIndex + 1, colIndex, curWordIndex + 1) ||
+					search(board, word, rowIndex - 1, colIndex, curWordIndex + 1) ||
+					search(board, word, rowIndex, colIndex + 1, curWordIndex + 1) ||
+					search(board, word, rowIndex, colIndex - 1, curWordIndex + 1));
+				board[rowIndex][colIndex] = saveChar;
+				return result;
+			}
+		}
+		//if we reach here, it means word[curWordIndex] != board[rowIndex][colIndex]) 
+		return false;
+
+	}
+	
+
+	bool exist(vector<vector<char>>& board, string word) {
+
+		int rowTotal = board.size();
+		int colTotal = board[0].size();
+		int startWordIndex = 0;
+
+		//we do need to go through every element in the board
+		//to see if we can find the answer 
+		//that is why time complexity is O(m*n* 4^(len of word)
+		for (int i = 0; i < rowTotal; i++) {
+			for (int j = 0; j < colTotal; j++) {
+				if (board[i][j] == word[startWordIndex]){
+					//start the seach once we found the first char
+					if (search(board, word, i, j, startWordIndex) == true) {
+						return true;
+					}
+				}
+			}
+		}
+		//if we reach here, it means
+		//we have search all element on the board and cannot find the answer
+		return false;
+	}
+};
+
+int main() {
+	Solution s;
+	vector<vector<char>> board = { {'A', 'B', 'C', 'E'},{'S', 'F', 'C', 'S'},{'A', 'D', 'E', 'E'} };
+	string word = "ABCB";
+	bool result;
+
+	result= s.exist(board, word);
+	return 0;
+}
