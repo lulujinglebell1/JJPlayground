@@ -1,0 +1,171 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+#include<stack>
+
+
+using namespace std;
+/*
+82. Remove Duplicates from Sorted List II
+Medium
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+Example 1:
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+Example 2:
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+Constraints:
+The number of nodes in the list is in the range [0, 300].
+-100 <= Node.val <= 100
+The list is guaranteed to be sorted in ascending order.
+
+solving method: 
+-originally, i tried to solve this myself by 
+-"save the previous node in case we need to delete the cur node
+-in the cur node always check the next node, if same then delete the cur node"
+//but i got lots of error becuase there are lots of coner checking!! 
+//[1122][11223][123335]
+//i spent at least 3 hours but still not able to get it pass!
+so i watch video https://www.youtube.com/watch?v=1I82s08OE0c
+//the dummy node and real node method that he used made the code much 
+//easier to understand !! the whole logic changed!!
+//so leetcode is really about algorithm and it is not really about coding
+//memerize the algorithm is very important
+*/
+
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+ 
+ //Below are my failing method: 3 hours coding still cannot make it passed!
+class Solution {
+public:
+	ListNode* deleteDuplicates(ListNode* head) {
+		ListNode* curNode;
+		ListNode* nextNode;
+		ListNode* preNode;
+		bool delOnGoing = false;
+		bool headChanged = false;
+		//case:[] OR [3]
+		if (head == NULL || head->next == NULL) {
+			return head;
+		}
+		//need to start from the secondNode as curNode becuase 
+		//it is possible that we have 1&2 node same value
+		//and for the below while loop we need to preNode
+		preNode = head;
+		curNode = head->next;
+		nextNode = curNode->next;
+
+		//[12]
+		if (nextNode == NULL) {
+			if (curNode->val == preNode->val) {
+				return NULL;
+			}
+			else {
+				return head;
+			}
+		}
+		//find a head with no duplicate
+		//[111]
+		//[11112222]
+		//[11223]
+		//[122]
+		if (curNode->val == preNode->val) {
+			while (curNode->val == preNode->val || curNode->val == nextNode->val) {
+				headChanged = true;
+				preNode = curNode;
+				if (nextNode == NULL) {
+					return NULL;
+				}
+				else {
+					curNode = nextNode;
+					nextNode = curNode->next;
+					if (nextNode == NULL) {
+						break;
+					}
+				}
+			}
+		}
+		if (headChanged == true) {
+			head = curNode;
+		}
+		else {
+			//[12345]
+			head = preNode;
+		}
+		if (head == NULL || head->next == NULL) {
+			return head;
+		}
+		nextNode = curNode->next;
+		while (nextNode != NULL) {
+			if (curNode->val == nextNode->val) {
+				//no need to update the preNode
+				delOnGoing = true;
+			}
+			else {
+				if (delOnGoing == true) {
+					// we found the differnce and 
+					//this is how we delete the duplicates
+					//[1223356] there could be another duplicate
+					//coming 
+					//	//[1,2,3,3,4,4,5]
+					if (nextNode != NULL) {
+						if (nextNode->next == NULL || nextNode->val != nextNode->next->val) {
+							preNode->next = curNode->next;
+							preNode = curNode;
+							delOnGoing = false;
+						}
+					}
+				}
+				else {
+					//continue the search
+					preNode = curNode;
+				}
+			}
+			//move to the next node:
+			//and we know nextNode is not NULL
+			curNode = nextNode;
+			//try and see if we can update the nextNode
+			//we here to make sure nextNode!=NULL:
+			if (curNode->next != NULL) {
+				nextNode = curNode->next;
+			}
+			else
+			{
+				if (delOnGoing == true) {
+					//finish up the delete
+					preNode->next = NULL;
+				}
+				//else no need to do anything
+				break;
+			}
+		}
+		return head;
+	}
+};
+
+int main() {
+	Solution s;
+	//[1,2,3,3,4,4,5]
+	ListNode node7(2, NULL);
+	ListNode node6(1, &node7);
+	ListNode node5(1, &node6);
+	//ListNode node4(3, &node5);
+	//ListNode node3(3, &node4);
+	//ListNode node2(2, &node3);
+	//ListNode node1(1, &node2);
+	s.deleteDuplicates(&node5);
+	return 0;
+}
