@@ -1,0 +1,97 @@
+
+#include<iostream>
+#include<assert.h>
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm> //for max function
+#include<unordered_map>
+#include<queue>
+#include<stack>
+
+
+using namespace std;
+/*
+82. Remove Duplicates from Sorted List II
+Medium
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+Example 1:
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+Example 2:
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+Constraints:
+The number of nodes in the list is in the range [0, 300].
+-100 <= Node.val <= 100
+The list is guaranteed to be sorted in ascending order.
+
+solving method: 
+-originally, i tried to solve this myself by 
+-"save the previous node in case we need to delete the cur node
+-in the cur node always check the next node, if same then delete the cur node"
+//but i got lots of error becuase there are lots of coner checking!! 
+//[1122][11223][123335]
+//i spent at least 3 hours but still not able to get it pass!
+so i watch video https://www.youtube.com/watch?v=1I82s08OE0c
+//the dummy node and real node method that he used made the code much 
+//easier to understand !! the whole logic changed!with less line of code
+//so leetcode is really about algorithm and it is not really about coding
+//memerize the algorithm is very important
+*/
+
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+ 
+ class Solution {
+ public:
+	 ListNode* deleteDuplicates(ListNode* head) {
+		 // we need to use dummy node because [111222]
+		 //we might need to delete the head node
+		 ListNode* dummyNode = new ListNode;
+		 //we use realNode to make sure the all node not duplicate
+		 ListNode* realNode = dummyNode;
+		 ListNode* preNode;
+		 ListNode* curNode = head;
+
+		 //if curNode == NULL, we already put every realNode to the list so we can return
+		 //we move until we reach the end of the List(which is curNode == NULL)
+		 while (curNode != NULL) {
+			 //only when curNode->val != preNode->val && curNode->val != curNode->next->val
+			 //then we can confirm curNode is a realNode
+			 //if curNode == head, we just need to make sure curNode->val != curNode->next->val
+			 // we need to check if curNode->next == NULL becuase if it is NULL,
+			 //we cannot access its value
+			 if ((curNode == head || curNode->val != preNode->val) && (curNode->next == NULL || curNode->val != curNode->next->val)) {
+				 realNode->next = curNode;
+				 realNode = curNode;
+			 }
+				 preNode = curNode;
+				 curNode = curNode->next;
+				 //(!!!important!!! if input =[1,2,2], without this it will output [122] instead of [1]
+				 preNode->next = NULL;
+		 }
+		 //if curNode==head==NULL, it will skip the while loop and reach NULL here
+		 //and "dummyNode->next == NULL" when initilized
+		 return dummyNode->next;
+	 }
+ };
+
+int main() {
+	Solution s;
+	//[1,2,3,3,4,4,5]
+	ListNode node7(5, NULL);
+	ListNode node6(4, &node7);
+	ListNode node5(4, &node6);
+	ListNode node4(3, &node5);
+	ListNode node3(3, &node4);
+	ListNode node2(2, &node3);
+	ListNode node1(1, &node2);
+	s.deleteDuplicates(&node1);
+	return 0;
+}
