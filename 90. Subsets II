@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h> //for memcpy ()
+#include<math.h> //for pow()
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ 
+ solving method:
+ -in order to be more familar with coding in c becuase i need to impement driver, 
+ -i choose to program this code in c
+ -the most important part for this quesiton is why the returnColume size is int**!!!~~
+ -another learning point is using the memcpy~~~
+ -spent 5 hours on it but it is worth the practise~~
+ -can practise more time in the future.~~~
+ */
+
+/*
+//this is a c++ solution, i am going to create a c soluiton to match this solving method:
+class Solution {
+public:
+	vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+		sort(nums.begin(), nums.end());
+		vector<vector<int>> result;
+		vector<int> subSet;
+		vector<int> empty;
+		result.push_back(empty);
+		dfs(nums, subSet, 0, result);
+
+		return result;
+	}
+
+	void dfs(vector<int>& nums, vector<int>& subSet, int start, vector<vector<int>>& result){
+
+		for(int i = start; i<nums.size(); i++){
+			if(i != start && nums[i] == nums[i-1]){
+				continue;
+			}
+			subSet.push_back(nums[i]);
+			result.push_back(subSet);
+
+			dfs(nums, subSet, i+1, result);
+			subSet.pop_back();
+		}
+	}
+};
+*/
+
+/*
+//this solution is from someone who submit to leetcode:
+void helper(int* nums, int len, int* returnSize, int** rcsizes, int** result, int startIndex, int curLen) {
+	int* returnColumeSize = *rcsizes;
+	// Keep track of previous array, it needs to copy that array over and over again.
+	int prevIndex = *returnSize - 1;
+
+	for (int q = startIndex; q < len; q++) {
+		if (q != startIndex && nums[q] == nums[q - 1])
+			continue;
+
+		//push the current value to the return result
+		returnColumeSize[*returnSize] = curLen + 1;
+		result[*returnSize] = (int*) malloc(sizeof(int) * returnColumeSize[*returnSize]);
+		// Copy previous array.
+		memcpy(result[*returnSize], result[prevIndex], sizeof(int) *curLen);
+		// Tack on next number to new (copied from previous) array.
+		result[*returnSize][curLen] = nums[q];
+		(*returnSize)++;
+
+		helper(nums, len, returnSize, rcsizes, result, q + 1, curLen + 1);
+
+	}
+}
+*/
+
+void helper(int* nums, int len, int* returnSize, int** rcsizes, int** result, int startIndex, int subSetLen, int* subSet) {
+	int* returnColumeSize = *rcsizes;
+
+	for (int q = startIndex; q < len; q++) {
+		if (q != startIndex && nums[q] == nums[q - 1])
+			continue;
+
+		//push the current value to the subset and push the subeset to the result
+		//allocate a new subset with subSetLen+1
+		int* newSubSet = (int*)malloc(sizeof(int)*(subSetLen + 1));
+		//copy the previous subSet to the new subSet
+		memcpy(newSubSet, subSet, sizeof(int) *subSetLen);
+		//push the current value to the new subset
+		newSubSet[subSetLen] = nums[q];
+		//push the new subSet to the result, the corresponded returnColumeSize also needed to be updated
+		result[*returnSize] = newSubSet;
+		returnColumeSize[*returnSize] = subSetLen + 1;
+		//increment the result length because we pushed one more set to the result
+		(*returnSize)++;
+		//increment the subSetLen beause we pushed new value to the subSet
+		subSetLen++;
+		helper(nums, len, returnSize, rcsizes, result, q + 1, subSetLen, newSubSet);
+		//with the same subSet but decrement the length == pop from vector
+		subSetLen--;
+	}
+}
+//argument of type "int (*)(const int *a, const int *b)" is incompatible with parameter of type "_CoreCrtNonSecureSearchSortCompareFunction"	JJ	C : \Users\jiayilu\source\repos\JJ\JJ\main.cpp	52
+
+int cmp(const void * a, const void * b) {
+	return (*(int*)a - *(int*)b);
+}
+
+
+int** subsetsWithDup(int* nums, int len, int* returnSize, int* *rcsizes) {
+	// Solution from subsets 1 problem changed slightly by sorting and then checking
+	// if previous number was already seen in recursive function. 
+
+	qsort(nums, len, sizeof(int), cmp); // Change added from Subsets 1 problem.
+
+	//the returnColumeSize and the result (pow(2, len) is more than what we need
+	//but it does not matter cause we have returnSize to keep track of the size
+
+	int* returnColumeSize = (int*) malloc(sizeof(int) * pow(2, len));
+	*rcsizes = returnColumeSize;
+
+	//[] is one of the return subset as well
+	returnColumeSize[0] = 0;
+	*returnSize = 1;
+
+	int**result =(int**) malloc(sizeof(int*) * pow(2, len));
+
+	int subSetLen = 0;
+	//we have to do malloc for subSet to pass to the funciton 
+	//without malloc, 	int* subSet; will be a NULL
+	//becasue if subSet is NULL, we cannot do memcpy later on
+	int* subSet = (int*) malloc(sizeof(int)*subSetLen);
+	int startIndex = 0;
+	helper(nums, len, returnSize, rcsizes, result, startIndex, subSetLen, subSet);
+
+	return result;
+}
