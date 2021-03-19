@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h> //for memcpy ()
+#include<math.h> //for pow()
+#include<vector>
+
+/*
+Input
+[3,5]
+1
+2
+
+Expected
+[5,3]
+
+Solving method:
+-i was not able to think about this at the first time i looked at this question after stop programming for 1 month~
+-then after i pick up the momentant again, i was able to solve this within 30 mins after i watch the video and understand the solving method
+
+*/
+
+// * Definition for singly-linked list.
+struct ListNode {
+	int val;
+	struct ListNode *next;
+};
+ 
+
+struct ListNode* reverseBetween(struct ListNode* head, int left, int right) {
+	struct ListNode* start = NULL;
+	struct ListNode* end = NULL;
+	struct ListNode* cur = head;
+	struct ListNode* pre = NULL;
+	struct ListNode* next = NULL;
+	struct ListNode* tail = NULL;
+	int i = 1;
+
+	if (head == NULL || head->next == NULL || left == right)
+	{
+		return head;
+	}
+	while (cur != NULL && i < left) {
+		pre = cur;
+		cur = cur->next;
+		i++;
+	}
+	start = pre;
+	tail = cur;
+	while (cur != NULL && i < right) {
+		next = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = next;
+		i++;
+	}
+	//if the target reverse value "left or right are not found"
+	if (cur == NULL) {
+		return head;
+	}
+	end = cur->next;
+	cur->next = pre;
+	if (start != NULL) {
+		start->next = cur;
+	}
+	else {
+		head = cur;
+	}
+	tail->next = end;
+	return head;
+}
+
+int main() {
+
+	return 0;
+}
