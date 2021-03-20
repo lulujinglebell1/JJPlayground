@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h> //for memcpy ()
+#include <string> //for memcpy ()
+
+#include<math.h> //for pow()
+#include<vector> 
+
+using namespace std; //we have do do this if we want to use vector, otherwise error
+
+
+/*
+class Solution {
+	public List<String> restoreIpAddresses(String s) {
+		List<String> res = new ArrayList<>();
+		if (s == null || s.length() < 4 || s.length() > 12) {
+			return res;
+		}
+		dfs(s, "", 0, res);
+		return res;
+	}
+
+	private void dfs(String s, String sub, int index, List<String> res) {
+		if (index == 4 || s.length() == 0) {
+			if (index == 4 && s.length() == 0) {
+				res.add(sub.substring(0, sub.length() - 1));
+			}
+			return;
+		}
+		//case 1: choose 1 digit
+		dfs(s.substring(1), sub + s.substring(0, 1) + ".", index + 1, res);
+		if (s.length() > 1 && s.charAt(0) != '0') {
+			//case 2: choose 2 digit
+			dfs(s.substring(2), sub + s.substring(0, 2) + ".", index + 1, res);
+			//case 3: choose 3 digit, cannot do case 3 until case 2 is valid,
+			//so this if statement has to be instide case 2
+			//otherwise we will see below error:
+			//Input "010010"
+			//Output ["0.1.0.010","0.1.001.0","0.10.0.10","0.100.1.0","010.0.1.0"]
+			//Expected["0.10.0.10","0.100.1.0"]
+			if (s.length() > 2 && Integer.valueOf(s.substring(0, 3)) <= 255) {
+				dfs(s.substring(3), sub + s.substring(0, 3) + ".", index + 1, res);
+			}
+		}
+	}
+};
+*/
+
+/*
+solving method:
+-so pruod of myself
+-after watching video to understand how to solve
+-i am able to code it myself in c++ without looking at the solution
+-took me 2 hours to complete and submit because i ran into some bug when i code
+*/
+
+class Solution {
+public:
+
+	bool threeDigitLessThanMax(string s, int curIndex) {
+		int total = 0;
+		for (int i = 0; i < 3; i++) {
+			total = total * 10 + (int)(s[curIndex + i] - '0');
+		}
+		if (total > 255) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+
+	void restoreIpAddressesDPS(string s, int curIndex, int remainStringLen, string curResultString, vector<string>& result, int digitNum) {
+		//stop condition
+		if (digitNum == 4 || remainStringLen == 0) {
+			if (digitNum == 4 && remainStringLen == 0) {
+				result.push_back(curResultString.substr(0, curResultString.size() - 1));
+			}
+			//else we return without pushback the curResultString to the result
+			return;
+		}
+
+		//case 1: choose 1 digit
+		if (remainStringLen >= 1) {
+			restoreIpAddressesDPS(s, curIndex + 1, remainStringLen - 1, curResultString + s[curIndex] + ".", result, digitNum + 1);
+		}
+		//case 2: choose 2 digit
+		if (remainStringLen >= 2 && s[curIndex] != '0') {
+			restoreIpAddressesDPS(s, curIndex + 2, remainStringLen - 2, curResultString + s[curIndex] + s[curIndex + 1] + ".", result, digitNum + 1);
+			//case 3: choose 3 digit
+			if (remainStringLen >= 3 && threeDigitLessThanMax(s, curIndex) == true) {
+				restoreIpAddressesDPS(s, curIndex + 3, remainStringLen - 3, curResultString + s[curIndex] + s[curIndex + 1] + s[curIndex + 2] + ".", result, digitNum + 1);
+			}
+		}
+		return;
+	}
+
+
+
+	vector<string> restoreIpAddresses(string s) {
+		vector<string> result;
+		int remainStringLen = s.length();
+		string curResultString = "";
+		int digitNum = 0;
+		int curIndex = 0;
+		restoreIpAddressesDPS(s, curIndex, remainStringLen, curResultString, result, digitNum);
+		return result;
+	}
+
+};
+
+
+int main() {
+	Solution s;
+	string input = "25525511135";
+	vector<string> result = s.restoreIpAddresses(input);
+	for (int i = 0; i < (int)result.size(); i++) {
+		printf("result %s", result[i].c_str());
+	}
+	return 0;
+}
