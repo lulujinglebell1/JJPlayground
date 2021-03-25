@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h> //for memcpy ()
+#include <string> //for memcpy ()
+
+#include<math.h> //for pow()
+#include<vector> 
+
+using namespace std;
+
+
+//c does not has vector, so we cannot do push as we have more output, all the result memory has to be allocated first
+//c does not has string variable, so have to convert to char* or char[],
+//need to know the differnce between char* and char[]
+//need to add "curResultStringLen' 
+//when initialize an char array char input[size],the size has to be a fix value,
+//input string has to be cosnt "const char* s"
+/*
+i spent 3 days to convert the c++ code to c.....LOL
+But i am supper happy when done and successfully submit
+lot of deail referring to the comment especially using char array:char s[12] = "19216811";
+*/
+
+
+bool threeDigitLessThanMax(const char* s, int curIndex) {
+	int total = 0;
+	for (int i = 0; i < 3; i++) {
+		total = total * 10 + (int)(s[curIndex + i] - '0');
+	}
+	if (total > 255) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+
+void restoreIpAddressesDPS( char* s, int curIndex, int remainStringLen, char* curResultString, int curResultStringIndex, char** result, int digitNum, int* returnSize) {
+	//stop condition
+	if (digitNum == 4 || remainStringLen == 0) {
+		if (digitNum == 4 && remainStringLen == 0) {
+			//+4 because we have 3 '.' and one '\0'
+			char* subResult = (char*)malloc(sizeof(char)*strlen(s) + 4);
+			//for some resome strcpy does not work, so i used memcpy
+			memcpy(subResult, curResultString, strlen(s) + 4);
+			subResult[sizeof(char)*strlen(s) + 3] = '\0';
+			result[*returnSize] = subResult;
+
+			(*returnSize)++;
+		}
+		//else we return without pushback the curResultString to the result
+		return;
+	}
+
+	//case 1: choose 1 digit
+	if (remainStringLen >= 1) {
+		//because input  is char array: 	char s[12] = "19216811";
+		//that is why we can modify it here
+		//if input is char*, we cannot modify the individual value like we do below
+		// we also need one more element "curResultStringIndex" to keep track of the index
+		curResultString[curResultStringIndex] = s[curIndex];
+		curResultString[curResultStringIndex + 1] = '.';
+		restoreIpAddressesDPS(s, curIndex + 1, remainStringLen - 1, curResultString, curResultStringIndex +2, result, digitNum + 1, returnSize);
+	}
+	//case 2: choose 2 digit
+	if (remainStringLen >= 2 && s[curIndex] != '0') {
+		curResultString[curResultStringIndex] = s[curIndex];
+		curResultString[curResultStringIndex + 1] = s[curIndex+1];
+		curResultString[curResultStringIndex + 2] = '.';
+		restoreIpAddressesDPS(s, curIndex + 2, remainStringLen - 2, curResultString, curResultStringIndex +3, result, digitNum + 1, returnSize);
+		//case 3: choose 3 digit
+		if (remainStringLen >= 3 && threeDigitLessThanMax(s, curIndex) == true) {
+			curResultString[curResultStringIndex + 2] = s[curIndex + 2];
+			curResultString[curResultStringIndex + 3] = '.';
+			restoreIpAddressesDPS(s, curIndex + 3, remainStringLen - 3, curResultString, curResultStringIndex +4, result, digitNum + 1, returnSize);
+		}
+	}
+	return;
+
+}
+
+
+char ** restoreIpAddresses( char * s, int* returnSize) {
+	int remainStringLen = strlen(s);
+	//we have to put 100 here, becuase we better to allocate more space to avoid "heap buffer over flow" error
+	//when we try to do result[i] = xxxx
+	char** result = (char**)malloc(sizeof(char*)*100);
+	char curResultString[16] = "000.000.000.000";
+	//char curResultString[16] = { '0','0','0','.', '0', '0', '0', '.', '0', '0', '0','.','0','0','0', '\0'};
+	int curResultStringIndex = 0;
+	int digitNum = 0;
+	int curIndex = 0;
+	*returnSize = 0;
+
+	restoreIpAddressesDPS(s, curIndex, remainStringLen, curResultString, curResultStringIndex, result, digitNum, returnSize);
+
+	return result;
+
+}
+
+//leetcode problem 93 restore IP
+struct testFuncPrt {
+	char** (*funcPtr) (char * s, int* returnSize);
+};
+
+int main() {
+
+	//char s[12] = { '2','5','5','2', '5', '5', '1', '1', '1', '3', '5','\0' };
+	//"19216811"
+	char s[12] = "19216811";
+	//char s[12] = { '1','9','2','1', '6', '8', '1', '1','\0' };  
+	// this is same as 	char s[12] = "19216811";
+	int returnSize; 
+	char** result;
+
+	struct testFuncPrt tmp;
+	// remove & can also work, because funtion name itself is an address
+	//tmp.funcPtr = &restoreIpAddresses;
+	tmp.funcPtr = restoreIpAddresses; 
+
+	// remove * can also work, because funtion name itself is an address
+	//result = (*tmp.funcPtr)(s, &returnSize);
+	result = tmp.funcPtr(s, &returnSize);
+
+	//printf("INPUT: %s\n",s);
+	for (int i = 0; i < returnSize; i++) {
+		printf("%d : %s\n", i, result[i]);
+	}
+
+	return 0;
+}
